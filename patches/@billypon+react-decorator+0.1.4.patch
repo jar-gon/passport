@@ -1,0 +1,14 @@
+diff --git a/node_modules/@billypon/react-decorator/index.js b/node_modules/@billypon/react-decorator/index.js
+index 8c0461e..2e6f0ea 100644
+--- a/node_modules/@billypon/react-decorator/index.js
++++ b/node_modules/@billypon/react-decorator/index.js
+@@ -1,6 +1,9 @@
+ import 'reflect-metadata';
+ var autobindSymbol = Symbol('autobind');
+ export function autobind() {
++    if (!process.browser) {
++        return function () { };
++    }
+     var params = [];
+     for (var _i = 0; _i < arguments.length; _i++) {
+         params[_i] = arguments[_i];

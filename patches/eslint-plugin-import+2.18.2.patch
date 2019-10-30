@@ -1,0 +1,22 @@
+diff --git a/node_modules/eslint-plugin-import/lib/rules/no-unresolved.js b/node_modules/eslint-plugin-import/lib/rules/no-unresolved.js
+index 5f675c4..c7877f1 100644
+--- a/node_modules/eslint-plugin-import/lib/rules/no-unresolved.js
++++ b/node_modules/eslint-plugin-import/lib/rules/no-unresolved.js
+@@ -16,6 +16,8 @@ var _docsUrl = require('../docsUrl');
+ 
+ var _docsUrl2 = _interopRequireDefault(_docsUrl);
+ 
++const _path = require('path');
++
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ 
+ /**
+@@ -40,7 +42,7 @@ module.exports = {
+     function checkSourceValue(source) {
+       const shouldCheckCase = !_resolve.CASE_SENSITIVE_FS && (!context.options[0] || context.options[0].caseSensitive !== false);
+ 
+-      const resolvedPath = (0, _resolve2.default)(source.value, context);
++      const resolvedPath = (0, _resolve2.default)(!source.value.startsWith('~') ? source.value : _path.relative(_path.dirname(context.getFilename()), _path.resolve(source.value.substr(2))), context);
+ 
+       if (resolvedPath === undefined) {
+         context.report(source, `Unable to resolve path to module '${source.value}'.`);

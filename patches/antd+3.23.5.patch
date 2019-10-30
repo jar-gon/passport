@@ -1,0 +1,11 @@
+diff --git a/node_modules/antd/es/form/interface.d.ts b/node_modules/antd/es/form/interface.d.ts
+index a212b58..2943aac 100644
+--- a/node_modules/antd/es/form/interface.d.ts
++++ b/node_modules/antd/es/form/interface.d.ts
+@@ -50,5 +50,5 @@ export declare type GetProps<C> = C extends React.ComponentType<infer P> ? P : n
+ export declare type ConnectedComponentClass<C extends React.ComponentType<any>, P> = React.ComponentClass<JSX.LibraryManagedAttributes<C, P>> & NonReactStatics<C> & {
+     WrappedComponent: C;
+ };
+-export declare type FormWrappedProps<TOwnProps extends WrappedFormInternalProps> = <C extends React.ComponentType<Matching<TOwnProps, GetProps<C>>>>(component: C) => ConnectedComponentClass<C, Omit<TOwnProps, keyof WrappedFormInternalProps>>;
++export declare type FormWrappedProps<TOwnProps extends WrappedFormInternalProps> = <C extends React.ComponentType<Matching<TOwnProps, GetProps<C>>>>(component: C) => any;
+ export {};

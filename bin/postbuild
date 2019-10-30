@@ -1,0 +1,25 @@
+#!/bin/bash
+
+cd dist
+
+if [ "$1" != ssr ]; then
+  if [ -f ../.next/BUILD_ID ]; then
+    rm -r _next/`cat ../.next/BUILD_ID`
+  fi
+else
+  echo "const json = require('../package.json'); delete json.scripts; console.log(JSON.stringify(json))" | node > package.json
+  cp ../yarn.lock .
+  yarn --prod
+  rm -r package.json yarn.lock .next/cache .next/records.json .next/server/records.json
+  mkdir pages
+  cp -a ../static .
+  cp ../next.config.production.js next.config.js
+  [ -f ../.env ] && cp ../.env .
+fi
+
+if [ -f ../.git ]; then
+  ref=`cat ../.git/HEAD | cut -d\  -f2`
+  if [ -f ../.git/$ref ]; then
+    cat ../.git/$ref > COMMIT_ID
+  fi
+fi

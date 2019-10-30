@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    "babel-plugin-transform-react-twist",
+    [ "@babel/plugin-proposal-decorators", { "legacy": true } ]
+  ]
+}

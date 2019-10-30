@@ -1,0 +1,12 @@
+diff --git a/node_modules/@zeit/next-css/css-loader-config.js b/node_modules/@zeit/next-css/css-loader-config.js
+index ac99775..0691756 100644
+--- a/node_modules/@zeit/next-css/css-loader-config.js
++++ b/node_modules/@zeit/next-css/css-loader-config.js
+@@ -73,7 +73,6 @@ module.exports = (
+       {},
+       {
+         modules: cssModules,
+-        minimize: !dev,
+         sourceMap: dev,
+         importLoaders: loaders.length + (postcssLoader ? 1 : 0)
+       },

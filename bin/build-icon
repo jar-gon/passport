@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const path = require('path')
+const glob = require('glob').sync
+const { execSync } = require('child_process')
+const { parse }  = require('svg-parser')
+
+execSync('svgo --pretty --indent=2 -q icons')
+
+const icons = { }
+
+glob('icons/*.svg').forEach(x => {
+  const content = fs.readFileSync(x, 'utf-8')
+  const svg = parse(content).children[0]
+  const name = path.basename(x, '.svg')
+  const exportName = name[0].toUpperCase() + name.substr(1).replace(/-([a-z])/g, (_, c) => c.toUpperCase())
+  icons[exportName] = {
+    name: `yq-${ name }`,
+    theme: 'outline',
+    icon: {
+      tag: 'svg',
+      attrs: {
+        viewBox: svg.properties.viewBox,
+        focusable: false,
+      },
+      children: svg.children.map(({ tagName, properties }) => ({ tag: tagName, attrs: properties })),
+    }
+  }
+})
+
+const definitions = Object.entries(icons)
+  .map(([ name, icon ]) => `export const YQ${ name }: IconDefinition = ${ JSON.stringify(icon, null, 2) }`)
+  .join('\n\n')
+fs.writeFileSync(`icons/icons.ts`, [
+  '/* eslint-disable */',
+  '',
+  'import { IconDefinition } from \'@ant-design/icons/lib/types\'',
+  '',
+  definitions,
+].join('\n'))

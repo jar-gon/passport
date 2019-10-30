@@ -1,0 +1,13 @@
+SiteLayout(headerSearch=false contentHeader=false footer=false)
+  div 用户登录
+  if inited
+    FormX(layout="vertical" onSubmit=handleSubmit)
+      FormItem(name="username" label="用户名")
+        Input(type="text" placeholder="用户名" onBlur=validFns.username)
+      FormItem(name="password" label="密码")
+        Input(type="password" placeholder="password" onBlur=validFns.password)
+  #noCaptchaCode
+  if state.errorMessage
+    div= state.errorMessage
+  Button(type="primary" onClick=handleSubmit loading=state.loading disabled=state.loading) 登录
+  a(href="/forget-password") 忘记密码

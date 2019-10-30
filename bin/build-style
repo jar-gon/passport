@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const { execSync } = require('child_process')
+
+const antd = {
+  names: Object.keys(require('antd')).filter(x => /^[A-Z]/.test(x)),
+  styles: { },
+};
+antd.names.forEach(name => {
+  const module = name[0].toLowerCase() + name.substr(1).replace(/[A-Z]/g, c => `-${c}`);
+  antd.styles[name] = `@import '~antd/es/${ module }/style/index.less';\n`
+});
+
+
+const modules = {
+  Form: true,
+  Modal: true,
+}
+
+const styles = antd.names
+  .filter(name => {
+    return modules[name] || [
+      `grep -rlP '^[ \\t]*${ name }(-.+)?(#[^#.( ]+)?(\\.[^#.( ]+)?(\\(| |$)' pages components || true`,
+    ].some(x => execSync(x, { encoding: 'utf-8' }))
+  })
+  .map(name => antd.styles[name])
+  .join('')
+
+fs.writeFileSync(`styles/antd.less`, styles)

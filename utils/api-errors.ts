@@ -1,0 +1,1 @@
+export const INVALID_TOKEN = '001001001'

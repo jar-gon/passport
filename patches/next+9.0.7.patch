@@ -1,0 +1,30 @@
+diff --git a/node_modules/next/dist/client/dev/webpack-hot-middleware-client.js b/node_modules/next/dist/client/dev/webpack-hot-middleware-client.js
+index cd5c619..b64e6bf 100644
+--- a/node_modules/next/dist/client/dev/webpack-hot-middleware-client.js
++++ b/node_modules/next/dist/client/dev/webpack-hot-middleware-client.js
+@@ -1 +1 @@
+-"use strict";var _interopRequireDefault=require("@babel/runtime-corejs2/helpers/interopRequireDefault");exports.__esModule=true;exports.default=void 0;var _hotDevClient=_interopRequireDefault(require("./error-overlay/hot-dev-client"));var _default=(_ref)=>{let{assetPrefix}=_ref;const options={path:assetPrefix+"/_next/webpack-hmr"};const devClient=(0,_hotDevClient.default)(options);devClient.subscribeToHmrEvent(obj=>{if(obj.action==='reloadPage'){return window.location.reload();}if(obj.action==='removedPage'){const[page]=obj.data;if(page===window.next.router.pathname){return window.location.reload();}return;}if(obj.action==='addedPage'){const[page]=obj.data;if(page===window.next.router.pathname&&typeof window.next.router.components[page]==='undefined'){return window.location.reload();}return;}throw new Error('Unexpected action '+obj.action);});return devClient;};exports.default=_default;
+\ No newline at end of file
++"use strict";var _interopRequireDefault=require("@babel/runtime-corejs2/helpers/interopRequireDefault");exports.__esModule=true;exports.default=void 0;var _hotDevClient=_interopRequireDefault(require("./error-overlay/hot-dev-client"));var _default=(_ref)=>{let{assetPrefix}=_ref;const options={path:assetPrefix+"/_next/webpack-hmr"};const devClient=(0,_hotDevClient.default)(options);devClient.subscribeToHmrEvent(obj=>{if(obj.action==='reloadPage'){return window.location.reload();}if(obj.action==='removedPage'){const[page]=obj.data;if(page===window.next.router.pathname){return window.location.reload();}return;}if(obj.action==='addedPage'){const[page]=obj.data;if(window.next.router.pathname!==page){window.next.router.events.on('routeChangeComplete',()=>window.location.reload());return;}if(page===window.next.router.pathname&&typeof window.next.router.components[page]==='undefined'){return window.location.reload();}return;}throw new Error('Unexpected action '+obj.action);});return devClient;};exports.default=_default;
+diff --git a/node_modules/next/dist/client/with-router.d.ts b/node_modules/next/dist/client/with-router.d.ts
+index f8b52dc..662cfcb 100644
+--- a/node_modules/next/dist/client/with-router.d.ts
++++ b/node_modules/next/dist/client/with-router.d.ts
+@@ -5,4 +5,4 @@ export declare type WithRouterProps = {
+     router: NextRouter;
+ };
+ export declare type ExcludeRouterProps<P> = Pick<P, Exclude<keyof P, keyof WithRouterProps>>;
+-export default function withRouter<P extends WithRouterProps, C = NextPageContext>(ComposedComponent: NextComponentType<C, any, P>): React.ComponentClass<ExcludeRouterProps<P>>;
++export default function withRouter<P extends WithRouterProps, C = NextPageContext>(ComposedComponent: NextComponentType<C, any, P>): any;
+diff --git a/node_modules/next/dist/next-server/lib/router/router.js b/node_modules/next/dist/next-server/lib/router/router.js
+index 7844eb9..6ca28a8 100644
+--- a/node_modules/next/dist/next-server/lib/router/router.js
++++ b/node_modules/next/dist/next-server/lib/router/router.js
+@@ -106,6 +106,7 @@ class Router {
+             this.notify(this.components[this.route]);
+             return;
+         }
++        this.reload();
+         if (route === this.route) {
+             this.notify(newData);
+         }

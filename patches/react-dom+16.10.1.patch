@@ -1,0 +1,22 @@
+diff --git a/node_modules/react-dom/cjs/react-dom.development.js b/node_modules/react-dom/cjs/react-dom.development.js
+index d60dd5f..1626d62 100644
+--- a/node_modules/react-dom/cjs/react-dom.development.js
++++ b/node_modules/react-dom/cjs/react-dom.development.js
+@@ -7586,7 +7586,7 @@ function validateProperties$2(type, props, canUseEventSystem) {
+ }
+ 
+ // TODO: direct imports like some-package/src/* are bad. Fix me.
+-var didWarnInvalidHydration = false;
++var didWarnInvalidHydration = true;
+ var didWarnShadyDOM = false;
+ var didWarnScriptTags = false;
+ var DANGEROUSLY_SET_INNER_HTML = 'dangerouslySetInnerHTML';
+@@ -14107,7 +14107,7 @@ function checkClassInstance(workInProgress, ctor, newProps) {
+     }
+ 
+     var noGetInitialStateOnES6 = !instance.getInitialState || instance.getInitialState.isReactClassApproved || instance.state;
+-    !noGetInitialStateOnES6 ? warningWithoutStack$1(false, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', name) : void 0;
++    // !noGetInitialStateOnES6 ? warningWithoutStack$1(false, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', name) : void 0;
+     var noGetDefaultPropsOnES6 = !instance.getDefaultProps || instance.getDefaultProps.isReactClassApproved;
+     !noGetDefaultPropsOnES6 ? warningWithoutStack$1(false, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a static property to define defaultProps instead.', name) : void 0;
+     var noInstancePropTypes = !instance.propTypes;
