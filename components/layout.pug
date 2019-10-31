@@ -1,24 +1,10 @@
 Layout
   Layout-Header
     Header
-      if props.headerSearch
-        label.header-search.clear-fix
-          span.header-search--wrapper
-            Icon(type="search")
-            span.header-placeholder 探索应用与解决方案
-          Input(onChange=updateKeyword onPressEnter=search)
 
   Layout-Content
-    if props.contentHeader
-      Layout-Header.header--menu
-        .layout--wrapper
-          Menu(mode="horizontal")
-            Menu-Item
-              Link(href="/"): a 分类
-            Menu-Item
-              Link(href="/"): a 全部
     = props.children
 
-  if props.footer
+  if props.footer !== false
     Layout-Footer
       .layout--wrapper CloudEMPower 提供技术支持
