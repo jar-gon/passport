@@ -1,7 +1,7 @@
 import router from 'next/router'
 import { connect } from 'react-redux/es'
 import { Component } from '@billypon/react-utils/react'
-import { getQueryParams } from '@billypon/react-utils/common'
+import { getQueryParams, buildUrl } from '@billypon/react-utils/common'
 
 import { mapState, ConnectedProps } from '~/utils/redux'
 import { storage } from '~/utils/storage'
@@ -24,11 +24,12 @@ class Logout extends Component<ConnectedProps> {
   }
 
   redirectFromLogout(): void {
-    let { redirect } = getQueryParams()
-    if (!redirect || redirect[0] !== '/') {
-      redirect = '/login'
-    }
-    router.replace(redirect)
+    const { redirect } = getQueryParams()
+    const url = buildUrl({
+      path: '/login',
+      query: redirect && { redirect },
+    })
+    router.replace(url)
   }
 
   render() {

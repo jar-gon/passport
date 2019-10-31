@@ -33,7 +33,7 @@
     "@babel/plugin-proposal-decorators": "7.6.0",
     "@billypon/react-decorator": "0.1.4",
     "@billypon/react-template": "0.1.0",
-    "@billypon/react-utils": "0.1.6",
+    "@billypon/react-utils": "0.1.8",
     "@billypon/rxjs-types": "0.1.0",
     "@billypon/ts-types": "0.1.0",
     "@types/next": "8.0.6",

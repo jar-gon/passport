@@ -86,11 +86,11 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginStat
       const domain = publicRuntimeConfig.PUBLIC_DOMAIN
       if (domain) {
         if (matcher([ hostname ], domain.split(',')).length) {
-          const params = qs.stringify({
+          const params = {
             token: storage.token,
             isv: storage.isv,
-          })
-          window.location.replace(`${ redirect }${ redirect.includes('?') ? '&' : '?' }${ params }`)
+          }
+          window.location.replace(`${ redirect }${ redirect.includes('?') ? '&' : '?' }${ qs.stringify(params) }`)
           return
         }
       }
