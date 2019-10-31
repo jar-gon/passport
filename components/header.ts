@@ -1,8 +1,18 @@
 import { Component } from '@billypon/react-utils/react'
 
+import { publicRuntimeConfig } from '~/utils/config'
+
 import template from './header.pug'
 
-class Header extends Component {
+interface HeaderState {
+  home: string
+}
+
+class Header extends Component<{ }, HeaderState> {
+  getInitialState() {
+    return { home: publicRuntimeConfig.PUBLIC_HOME }
+  }
+
   render() {
     return template.call(this, { ...this })
   }
