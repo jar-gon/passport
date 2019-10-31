@@ -4,7 +4,7 @@ import Form, { FormComponentProps } from 'antd/es/form'
 import qs from 'qs'
 import matcher from 'matcher'
 import { FormComponent, FormComponentState } from '@billypon/react-utils/form'
-import { dev, getQueryParams } from '@billypon/react-utils/common'
+import { getQueryParams } from '@billypon/react-utils/common'
 
 import { mapState, ConnectedProps } from '~/utils/redux'
 import { storage, checkLogin } from '~/utils/storage'
@@ -85,7 +85,7 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginStat
       const { hostname } = window.location
       const domain = publicRuntimeConfig.PUBLIC_DOMAIN
       if (domain) {
-        if (matcher.isMatch(hostname, domain)) {
+        if (matcher([ hostname ], domain.split(',')).length) {
           const params = qs.stringify({
             token: storage.token,
             isv: storage.isv,
