@@ -1,14 +1,13 @@
 .header
-  .layout--wrapper.position-relative
-    Link(href="/"): a
-      img.logo(src=require('~/assets/logo.svg'))
+  Link(href=state.home): a
+    img.logo(src=require('~/assets/logo.svg'))
 
-    Menu(mode="horizontal")
-      Menu-Item
-        Link(href=state.home): a 首页
-      Menu-Item
-        Link(href="/login"): a 登录
-      Menu-Item
-        a(href="#") 免费注册
+  Menu(mode="horizontal")
+    Menu-Item
+      Link(href=state.home): a 首页
+    Menu-Item
+      Link(href="/login"): a 登录
+    Menu-Item
+      a(href="#") 免费注册
 
-    = props.children
+  = props.children
