@@ -1,0 +1,77 @@
+.account
+  height 100%
+  background url('../assets/account-bg.jpg') left -($layout-header-height) no-repeat $component-background
+
+  &-wrapper
+    base-width 370px
+    padding-left 20px
+
+    &-slogan
+      padding 50px 20px 30px 0
+      font-size $font-size-lg
+      color $title-color
+      text-align center
+
+    .ant-form
+
+      &-item
+        &-label
+          padding-bottom 4px
+          line-height 22px
+
+    .ant-input
+      &-suffix
+        right 0
+        width 82px
+        font-size $font-size-sm
+        text-align center
+        cursor pointer
+
+        div
+          padding 8px 0
+
+        &:before
+          position absolute
+          left 0
+          top 7px
+          content ''
+          width 1px
+          height 20px
+          background $border-normal-color
+
+        &-disabled
+          color $black-25
+          cursor not-allowed
+
+      &-affix-wrapper
+
+        .ant-input:not(:last-child)
+          padding-right 92px
+
+    .ant-btn
+      width 330px
+
+  &--error
+    margin-top -8px
+    padding-bottom 8px
+    font-size $font-size-sm
+    color $red
+
+  a
+    font-size $font-size-sm
+
+.login, .forget--step1
+
+  .nc-container
+    margin 8px 0 20px
+
+.register, .forget--step2
+
+  .account-wrapper
+    top 40px
+
+  .agreement
+    display inline-block
+    margin-left 10px
+    width 300px
+    vertical-align top

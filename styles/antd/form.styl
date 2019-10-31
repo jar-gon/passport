@@ -1,0 +1,80 @@
+.ant-form
+  &-extra, &-explain
+    @extend .font-size_10
+    display block
+    line-height 16px
+    @extend .transform-origin_left
+
+  &-extra
+    margin 10px 0 -10px
+    padding 0
+    color $caption-color
+
+  &-explain
+    position relative
+    top 10px
+
+  &-item
+    font-size $font-size-sm
+
+    &-with-help
+      margin-bottom 20px
+
+    &-control-wrapper
+      display inline-block
+      vertical-align top
+
+    &-control
+      line-height inherit
+
+    &-label
+      width 135px
+      line-height 34px
+      text-align left
+      vertical-align top
+
+      label
+        font-size $font-size-sm
+        color $title-color
+
+        &:before, &:after
+          content ''
+          margin 0
+
+      .ant-form-item-required:after
+        content '*'
+        margin-left 4px
+        color $red
+
+    label.ant-checkbox-wrapper
+      font-size $font-size-sm
+      color $caption-color
+
+  &-text, &-text-placeholder
+    padding-left 10px
+    line-height $input-height-base
+    font-size $font-size-sm
+
+    &.large
+      line-height $input-height-lg
+
+    &.small
+      line-height $input-height-sm
+
+  &-text-placeholder
+    color $black-25
+
+  &-vertical
+
+    .ant-form
+      &-item
+        margin 0
+        padding-bottom 12px
+
+      &-explain
+        margin -2px 0 2px
+
+  &-inline
+
+    .ant-input, .ant-select
+      width 210px

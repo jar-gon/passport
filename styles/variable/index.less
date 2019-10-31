@@ -5,7 +5,7 @@
 //@html-selector: html;
 
 // -------- Colors -----------
-//@primary-color: @blue-6;
+@primary-color: #525f7f;
 //@info-color: @blue-6;
 //@success-color: @green-6;
 //@processing-color: @blue-6;
@@ -13,8 +13,8 @@
 //@highlight-color: @red-6;
 //@warning-color: @gold-6;
 //@normal-color: #d9d9d9;
-//@white: #fff;
-//@black: #000;
+@white: #fff;
+@black: #000;
 
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
@@ -33,13 +33,13 @@
 // ---
 
 // Background color for `<body>`
-//@body-background: #fff;
+@body-background: #fafbfc;
 // Base background color for most components
 //@component-background: #fff;
 @font-family : 'San Francisco', 'Helvetica Neue', Helvetica, 'Segoe UI', Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', 'Microsoft YaHei', SimSun, 'WenQuanYi Micro Hei', sans-serif;
 //@code-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-//@text-color: fade(@black, 65%);
-//@text-color-secondary: fade(@black, 45%);
+@text-color: @primary-color;
+@text-color-secondary : #6b7c93;
 //@text-color-inverse: @white;
 //@icon-color: inherit;
 //@icon-color-hover: fade(@black, 75%);
@@ -50,22 +50,22 @@
 //@text-selection-bg: @primary-color;
 //@font-variant-base: tabular-nums;
 //@font-feature-settings-base: 'tnum';
-//@font-size-base: 14px;
+@font-size-base: 14px;
 //@font-size-lg: @font-size-base + 2px;
-//@font-size-sm: 12px;
+@font-size-sm: 12px;
 //@heading-1-size: ceil(@font-size-base * 2.71);
 //@heading-2-size: ceil(@font-size-base * 2.14);
 //@heading-3-size: ceil(@font-size-base * 1.71);
 //@heading-4-size: ceil(@font-size-base * 1.42);
 //@line-height-base: 1.5;
-//@border-radius-base: 4px;
+@border-radius-base: 2px;
 //@border-radius-sm: 2px;
 
 // vertical paddings
 //@padding-lg: 24px; // containers
 //@padding-md: 16px; // small containers and buttons
-//@padding-sm: 12px; // Form controls and items
-//@padding-xs: 8px; // small items
+@padding-sm: 12px; // Form controls and items
+@padding-xs: 8px; // small items
 
 // vertical padding for all form controls
 //@control-padding-horizontal: @padding-sm;
@@ -80,8 +80,8 @@
 //@iconfont-css-prefix: anticon;
 
 // LINK
-//@link-color: @primary-color;
-//@link-hover-color: color(~`colorPalette('@{link-color}', 5) `);
+@link-color: #f7931e;
+@link-hover-color: #d6801a;
 //@link-active-color: color(~`colorPalette('@{link-color}', 7) `);
 //@link-decoration: none;
 //@link-hover-decoration: none;
@@ -103,8 +103,8 @@
 //@ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
 
 // Border color
-//@border-color-base: hsv(0, 0, 85%); // base border outline a component
-//@border-color-split: hsv(0, 0, 91%); // split border inside a component
+//@border-color-base: hsv(0, 0, 85%); // base border outline a component #d9d9d9
+@border-color-split: #e9e9e9; // split border inside a component #e9e8e9
 //@border-color-inverse: @white;
 //@border-width-base: 1px; // width of the border for a component
 //@border-style-base: solid; // style of a components border
@@ -114,8 +114,8 @@
 //@outline-width: 2px;
 //@outline-color: @primary-color;
 
-//@background-color-light: hsv(0, 0, 98%); // background of header and selected item
-//@background-color-base: hsv(0, 0, 96%); // Default grey background color
+@background-color-light: #fafbfc; // background of header and selected item #fafafa
+//@background-color-base: hsv(0, 0, 96%); // Default grey background color #f5f5f5
 
 // Disabled states
 //@disabled-color: fade(#000, 25%);
@@ -133,7 +133,7 @@
 //@shadow-2: 0 4px 12px @shadow-color;
 
 // Buttons
-//@btn-font-weight: 400;
+@btn-font-weight: normal;
 //@btn-border-radius-base: @border-radius-base;
 //@btn-border-radius-sm: @border-radius-base;
 //@btn-border-width: @border-width-base;
@@ -157,14 +157,14 @@
 //@btn-disable-bg: @disabled-bg;
 //@btn-disable-border: @border-color-base;
 
-//@btn-padding-base: 0 @padding-md - 1px;
-//@btn-font-size-lg: @font-size-lg;
-//@btn-font-size-sm: @font-size-base;
+@btn-padding-base: 0 @padding-sm;
+@btn-font-size-lg: @font-size-base;
+@btn-font-size-sm: @font-size-sm;
 //@btn-padding-lg: @btn-padding-base;
-//@btn-padding-sm: 0 @padding-xs - 1px;
+@btn-padding-sm: 0 @padding-xs;
 
-//@btn-height-base: 32px;
-//@btn-height-lg: 40px;
+@btn-height-base: 28px;
+@btn-height-lg: 32px;
 //@btn-height-sm: 24px;
 
 //@btn-circle-size: @btn-height-base;
@@ -187,7 +187,7 @@
 //@descriptions-bg: #fafafa;
 
 // Dropdown
-//@dropdown-selected-color: @primary-color;
+@dropdown-selected-color: @white;
 
 // Empty
 //@empty-font-size: @font-size-base;
@@ -198,10 +198,10 @@
 
 // Radio buttons
 //@radio-button-bg: @btn-default-bg;
-//@radio-button-checked-bg: @btn-default-bg;
-//@radio-button-color: @btn-default-color;
-//@radio-button-hover-color: @primary-5;
-//@radio-button-active-color: @primary-7;
+@radio-button-checked-bg: fade(#556dd6, 5%);
+@radio-button-color: @primary-color;
+@radio-button-hover-color: @primary-color;
+@radio-button-active-color: @primary-color;
 
 // Media queries breakpoints
 // Extra small screen / phone
@@ -240,13 +240,13 @@
 //@grid-gutter-width: 0;
 
 // Layout
-//@layout-body-background: #f0f2f5;
-//@layout-header-background: #001529;
+@layout-body-background: transparent;
+@layout-header-background: @primary-color;
 //@layout-footer-background: @layout-body-background;
-//@layout-header-height: 64px;
-//@layout-header-padding: 0 50px;
-//@layout-footer-padding: 24px 50px;
-//@layout-sider-background: @layout-header-background;
+@layout-header-height: 60px;
+@layout-header-padding: 0 40px;
+@layout-footer-padding: 20px 40px;
+@layout-sider-background: @layout-body-background;
 //@layout-trigger-height: 48px;
 //@layout-trigger-background: #002140;
 //@layout-trigger-color: #fff;
@@ -309,7 +309,7 @@
 //@input-padding-vertical-base: 4px;
 //@input-padding-vertical-sm: 1px;
 //@input-padding-vertical-lg: 6px;
-//@input-placeholder-color: hsv(0, 0, 75%);
+//@input-placeholder-color: hsv(0, 0, 75%); //#bfbfbf
 //@input-color: @text-color;
 //@input-border-color: @border-color-base;
 //@input-bg: @component-background;
@@ -391,7 +391,7 @@
 //@menu-popup-bg: @component-background;
 //@menu-item-color: @text-color;
 //@menu-highlight-color: @primary-color;
-//@menu-item-active-bg: @item-active-bg;
+@menu-item-active-bg: @primary-color;
 //@menu-item-active-border-width: 3px;
 //@menu-item-group-title-color: @text-color-secondary;
 //@menu-icon-size: @font-size-base;
@@ -399,7 +399,7 @@
 
 //@menu-item-vertical-margin: 4px;
 //@menu-item-font-size: @font-size-base;
-//@menu-item-boundary-margin: 8px;
+@menu-item-boundary-margin: 0;
 //@menu-icon-size: @font-size-base;
 //@menu-icon-size-lg: @font-size-lg;
 //@menu-dark-selected-item-icon-color: @white;
@@ -469,8 +469,8 @@
 
 // Rate
 // ---
-//@rate-star-color: @yellow-6;
-//@rate-star-bg: @border-color-split;
+@rate-star-color: @link-color;
+@rate-star-bg: fade(@black, 30%);
 
 // Card
 // ---
@@ -478,7 +478,7 @@
 //@card-head-background: transparent;
 //@card-head-padding: 16px;
 //@card-inner-head-padding: 12px;
-//@card-padding-base: 24px;
+@card-padding-base: 20px;
 //@card-actions-background: @background-color-light;
 //@card-skeleton-bg: #cfd8dc;
 //@card-background: @component-background;
@@ -551,7 +551,7 @@
 //@pagination-item-size: 32px;
 //@pagination-item-size-sm: 24px;
 //@pagination-font-family: Arial;
-//@pagination-font-weight-active: 500;
+@pagination-font-weight-active: normal;
 //@pagination-item-bg-active: @component-background;
 
 // PageHeader
@@ -567,10 +567,10 @@
 //@breadcrumb-last-item-color: @text-color;
 //@breadcrumb-font-size: @font-size-base;
 //@breadcrumb-icon-font-size: @font-size-base;
-//@breadcrumb-link-color: @text-color-secondary;
-//@breadcrumb-link-color-hover: @primary-5;
+@breadcrumb-link-color: @link-color;
+@breadcrumb-link-color-hover: @link-hover-color;
 //@breadcrumb-separator-color: @text-color-secondary;
-//@breadcrumb-separator-margin: 0 @padding-xs;
+@breadcrumb-separator-margin: 0 @padding-sm;
 
 // Slider
 // ---

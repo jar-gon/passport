@@ -1,0 +1,43 @@
+p, ul, ol, dl, dd
+  margin 0
+
+ul, th, td
+  padding 0
+
+table
+  width 100%
+
+.title_color
+  color $title-color
+
+#__next
+  height 100%
+
+:focus
+  outline none
+  text-decoration none
+
+base-width(width)
+  margin 0 auto
+  width width
+
+.line-list
+  font-size 0
+
+  > li
+    display inline-block
+    vertical-align top
+
+.font-size_10
+  display inline-block
+  font-size $font-size-sm
+  line-height 10px
+  transform scale(.83)
+
+.transform-origin_left
+  transform-origin left
+  -webket-transform-origin left
+
+@import 'antd/*'
+@import 'component/*'
+@import 'special/*'
