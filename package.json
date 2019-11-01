@@ -5,9 +5,8 @@
   "scripts": {
     "start": "next dev -p 3002",
     "build": "rm -rf .next && next build",
-    "postbuild": "rm -rf dist && next export -o dist && bin/postbuild",
-    "build:ssr": "rm -rf .next && next build",
-    "postbuild:ssr": "rm -rf dist && mkdir dist && cp -a .next dist && bin/postbuild ssr",
+    "export:html": "rm -rf dist && next export -o dist && bin/export",
+    "export:ssr": "rm -rf dist && mkdir dist && cp -a .next dist && bin/export ssr",
     "start:prod": "next start -p 3002",
     "build-icon": "bin/build-icon",
     "build-style": "bin/build-style",
