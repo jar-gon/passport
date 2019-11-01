@@ -14,7 +14,7 @@ import '~/icons'
 
 class App extends NextApp<AppProps> {
   static async getInitialProps({ Component, ctx }: NextJSAppContext) {
-    let isvName = publicRuntimeConfig.PUBLIC_ISV
+    let isvName = publicRuntimeConfig.isv
     if (!dev && !isvName) {
       isvName = !ctx.req ? window.location.hostname : ctx.req.headers.host.split(':')[0]
     }

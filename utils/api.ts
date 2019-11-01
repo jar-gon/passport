@@ -18,7 +18,7 @@ export function parsePageData(observable: Observable<PageResult<any>>): Observab
 }
 
 function getBaseUrl(port: number): string {
-  return `${ publicRuntimeConfig.PUBLIC_API }:${ port }/api/v1`
+  return `${ publicRuntimeConfig.api }:${ port }/api/v1`
 }
 
 function getPipes({ share = true, cache = true, raw = false }: Dictionary): ObservablePipe[] {

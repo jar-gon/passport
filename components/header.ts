@@ -10,7 +10,7 @@ interface HeaderState {
 
 class Header extends Component<{ }, HeaderState> {
   getInitialState() {
-    return { home: publicRuntimeConfig.PUBLIC_HOME }
+    return { home: publicRuntimeConfig.home }
   }
 
   render() {

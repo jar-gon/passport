@@ -83,7 +83,7 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginStat
     let { redirect } = getQueryParams()
     if (/(https?:)?\/\//.test(redirect)) {
       const { hostname } = window.location
-      const domain = publicRuntimeConfig.PUBLIC_DOMAIN
+      const { domain } = publicRuntimeConfig
       if (domain) {
         if (matcher([ hostname ], domain.split(',')).length) {
           const params = {

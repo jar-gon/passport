@@ -3,7 +3,7 @@ import { NoCaptcha as OriginNoCaptcha } from '@billypon/react-utils/captcha/aliy
 import { publicRuntimeConfig } from './config'
 
 export class NoCaptcha extends OriginNoCaptcha {
-  constructor(appkey = publicRuntimeConfig.PUBLIC_CAPTCHA, renderTo = '#noCaptchaCode', language = 'cn') {
+  constructor(appkey = publicRuntimeConfig.captcha, renderTo = '#noCaptchaCode', language = 'cn') {
     super({
       appkey,
       token: [ appkey, (new Date()).getTime(), Math.random() ].join(':'),

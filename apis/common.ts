@@ -34,6 +34,6 @@ export default class {
   }
 
   getBaseUrl(): string {
-    return publicRuntimeConfig.PUBLIC_API
+    return publicRuntimeConfig.api
   }
 }
