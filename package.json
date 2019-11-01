@@ -8,7 +8,7 @@
     "postbuild": "rm -rf dist && next export -o dist && bin/postbuild",
     "build:ssr": "rm -rf .next && next build",
     "postbuild:ssr": "rm -rf dist && mkdir dist && cp -a .next dist && bin/postbuild ssr",
-    "start:prod": "next start",
+    "start:prod": "next start -p 3002",
     "build-icon": "bin/build-icon",
     "build-style": "bin/build-style",
     "lint": "eslint pages utils apis models icons --ext .ts,.tsx -f codeframe",
