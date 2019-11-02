@@ -20,7 +20,7 @@ const antd = {
   styles: { },
 };
 antd.names.forEach(name => {
-  const module = name[0].toLowerCase() + name.substr(1).replace(/[A-Z]/g, c => `-${c}`);
+  const module = name[0].toLowerCase() + name.substr(1).replace(/[A-Z]/g, c => `-${c.toLowerCase()}`);
   antd.styles[name] = `@import '~antd/es/${ module }/style/index.less';\n`
 });
 
