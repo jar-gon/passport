@@ -95,7 +95,7 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginStat
         }
       }
       redirect = ''
-    } else if (redirect[0] !== '/') {
+    } else if (redirect && redirect[0] !== '/') {
       redirect = ''
     }
     router.replace(redirect || '/')
