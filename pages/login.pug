@@ -1,16 +1,16 @@
 SiteLayout(footer=false)
   .account.login
-    .account-wrapper
-      .account-wrapper-slogan 欢迎登录 CloudEMPower
-      if inited
+    if inited
+      .account-wrapper
+        .account-wrapper-slogan 欢迎登录 CloudEMPower
         FormX(layout="vertical" onSubmit=submitForm)
           FormItem(name="username" label="用户名")
             Input(type="text" placeholder="用户名" onBlur=validFns.username)
           FormItem(name="password" label="密码")
             Input(type="password" placeholder="password" onBlur=validFns.password)
-      #noCaptchaCode.slide-verify-code
-      if state.errorMessage
-        .account--error= state.errorMessage
-      Button(type="primary" size="large" onClick=submitForm loading=state.loading disabled=state.loading) 登录
-      //- .margin-top_20
-        a(href="/forget-password") 忘记密码
+        #noCaptchaCode.slide-verify-code
+        if state.errorMessage
+          .account--error= state.errorMessage
+        Button(type="primary" size="large" onClick=submitForm loading=state.loading disabled=state.loading) 登录
+        //- .margin-top_20
+          a(href="/forget-password") 忘记密码

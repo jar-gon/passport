@@ -33,7 +33,7 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginStat
     }
     super.componentDidMount()
     this.accountApi = new AccountApi(this.props.isvName)
-    this.captcha = new NoCaptcha
+    setTimeout(() => this.captcha = new NoCaptcha)
   }
 
   getFormFields() {
