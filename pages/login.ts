@@ -5,6 +5,7 @@ import qs from 'qs'
 import matcher from 'matcher'
 import { FormComponent, FormComponentState } from '@billypon/react-utils/form'
 import { getQueryParams } from '@billypon/react-utils/common'
+import { autobind } from '@billypon/react-decorator'
 
 import { mapState, ConnectedProps } from '~/utils/redux'
 import { storage, checkLogin } from '~/utils/storage'
@@ -51,6 +52,7 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginStat
     }
   }
 
+  @autobind()
   formSubmit(values) {
     if (!this.captcha.data) {
       this.setState({ errorMessage: '请滑动验证码' })
