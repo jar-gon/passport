@@ -55,6 +55,7 @@
     "@typescript-eslint/camelcase": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/member-delimiter-style": [ 2, { "multiline": { "delimiter": "none" } } ],
+    "@typescript-eslint/no-empty-function": 1,
     "@typescript-eslint/no-empty-interface": [ 2, { "allowSingleExtends": true } ],
     "@typescript-eslint/no-inferrable-types": 0
   },
