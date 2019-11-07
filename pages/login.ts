@@ -13,6 +13,7 @@ import { NoCaptcha } from '~/utils/captcha'
 import { publicRuntimeConfig } from '~/utils/config'
 
 import AccountApi from '~/apis/account'
+import { ApiResult } from '~/models/api'
 
 import SiteLayout from '~/components/layout'
 import template from './login.pug'
@@ -74,8 +75,8 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginStat
         storage.isv = isvId
         this.redirectFromLogin()
       },
-      ({ response: { data } }) => {
-        this.setState({ errorMessage: data.retMsg, loading: false })
+      ({ retMsg }: ApiResult) => {
+        this.setState({ errorMessage: retMsg, loading: false })
         this.captcha.reload()
       },
     )
