@@ -24,7 +24,7 @@ interface LoginState {
 
 @connect(mapState)
 @Form.create()
-class Login extends FormComponent<ConnectedProps & FormComponentProps, LoginState & FormComponentState> {
+class Login extends FormComponent<ConnectedProps & FormComponentProps, FormComponentState & LoginState> {
   accountApi: AccountApi
   captcha: NoCaptcha;
 
