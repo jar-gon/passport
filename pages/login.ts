@@ -1,10 +1,11 @@
 import router from 'next/router'
 import { connect } from 'react-redux/es'
-import Form, { FormComponentProps } from 'antd/es/form'
 import qs from 'qs'
 import matcher from 'matcher'
-import { FormComponent, FormComponentState } from '@billypon/react-utils/form'
-import { getQueryParams } from '@billypon/react-utils/common'
+import { Component } from '@billypon/react-utils/react'
+import FormComponent, { FormComponentRef, FormState } from '@billypon/react-utils/form-component'
+import { browser, getQueryParams } from '@billypon/react-utils/common'
+import { Dictionary } from '@billypon/ts-types'
 import { autobind } from '@billypon/react-decorator'
 
 import { mapState, ConnectedProps } from '~/utils/redux'
@@ -19,48 +20,55 @@ import SiteLayout from '~/components/layout'
 import template from './login.pug'
 
 interface LoginState {
+  states: Dictionary<FormState>
   errorMessage: string
 }
 
 @connect(mapState)
-@Form.create()
-class Login extends FormComponent<ConnectedProps & FormComponentProps, FormComponentState & LoginState> {
+class Login extends Component<ConnectedProps, LoginState> {
   accountApi: AccountApi
+  form = new FormComponentRef()
   captcha: NoCaptcha;
+
+  getInitialState() {
+    if (!browser) {
+      return super.getInitialState()
+    }
+    const states: Dictionary<FormState> = {
+      username: {
+        label: '用户名',
+        rules: [
+          { required: true, message: '请输入用户名' },
+        ],
+      },
+      password: {
+        label: '密码',
+        subtype: 'password',
+        rules: [
+          { required: true, message: '请输入密码' },
+        ],
+      },
+    }
+    return { states }
+  }
 
   componentDidMount() {
     if (checkLogin()) {
       this.redirectFromLogin()
       return
     }
-    super.componentDidMount()
     this.accountApi = new AccountApi(this.props.isvName)
-    setTimeout(() => this.captcha = new NoCaptcha)
-  }
-
-  getFormFields() {
-    return {
-      username: {
-        rules: [
-          { required: true, message: '请输入用户名' },
-        ],
-      },
-      password: {
-        rules: [
-          { required: true, message: '请输入密码' },
-        ],
-      },
-    }
+    this.captcha = new NoCaptcha
   }
 
   @autobind()
-  formSubmit(values) {
+  onSubmit(values) {
     if (!this.captcha.data) {
       this.setState({ errorMessage: '请滑动验证码' })
       return
     }
     const { csessionid, scene, sig } = this.captcha.data
-    this.setState({ errorMessage: '', loading: true })
+    this.form.setLoading(true).subscribe(() => this.setState({ errorMessage: '' }))
     this.accountApi.login(
       values.username,
       values.password,
@@ -76,7 +84,7 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, FormCompo
         this.redirectFromLogin()
       },
       ({ retMsg }: ApiResult) => {
-        this.setState({ errorMessage: retMsg, loading: false })
+        this.form.setLoading(false).subscribe(() => this.setState({ errorMessage: retMsg }))
         this.captcha.reload()
       },
     )
@@ -105,7 +113,7 @@ class Login extends FormComponent<ConnectedProps & FormComponentProps, FormCompo
   }
 
   render() {
-    return template.call(this, { ...this, SiteLayout })
+    return template.call(this, { ...this, SiteLayout, FormComponent })
   }
 }
 

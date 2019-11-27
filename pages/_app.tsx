@@ -6,7 +6,7 @@ import { dev } from '@billypon/react-utils/common'
 import '@billypon/react-utils/axios'
 
 import { initializeStore } from '~/utils/redux'
-import { publicRuntimeConfig } from '~/utils/config'
+import { serverRuntimeConfig } from '~/utils/config'
 
 import '~/styles/index.less'
 import '~/styles/index.styl'
@@ -14,11 +14,12 @@ import '~/icons'
 
 class App extends NextApp<AppProps> {
   static async getInitialProps({ Component, ctx }: NextJSAppContext) {
-    let isvName = publicRuntimeConfig.isv
+    let isvName = serverRuntimeConfig.isv
     if (!dev && !isvName) {
       isvName = !ctx.req ? window.location.hostname : ctx.req.headers.host.split(':')[0]
     }
     ctx.store.dispatch({ type: 'isvName', value: isvName })
+    ctx.store.dispatch({ type: 'homeUrl', value: serverRuntimeConfig.home })
     const pageProps = await loadGetInitialProps(Component, ctx)
     return { pageProps }
   }

@@ -1,9 +1,14 @@
 require('dotenv-load')()
 
 const publicRuntimeConfig = { }
+const serverRuntimeConfig = { }
 
-Object.entries(process.env)
-  .filter(([ key ]) => key.startsWith('PUBLIC_'))
-  .forEach(([ key, value ]) => publicRuntimeConfig[key] = value)
+Object.entries(process.env).forEach(([ key, value ]) => {
+  if (key.startsWith('PUBLIC_')) {
+    publicRuntimeConfig[key] = value
+  } else if (key.startsWith('SERVER_')) {
+    serverRuntimeConfig[key] = value
+  }
+})
 
-module.exports = { publicRuntimeConfig }
+module.exports = { publicRuntimeConfig, serverRuntimeConfig }

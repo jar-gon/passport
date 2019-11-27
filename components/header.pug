@@ -1,10 +1,10 @@
 .header
-  a(href=homeUrl)
+  a(href=props.homeUrl)
     img.logo(src=require('~/assets/logo.svg'))
 
   Menu(mode="horizontal")
     Menu-Item
-      a(href=homeUrl) 首页
+      a(href=props.homeUrl) 首页
     Menu-Item
       Link(href="/login"): a 登录
     Menu-Item
