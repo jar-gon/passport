@@ -1,5 +1,5 @@
 diff --git a/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js b/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js
-index d28e499..8cdfa4b 100644
+index d28e499..bacf1b3 100644
 --- a/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js
 +++ b/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js
 @@ -9,6 +9,16 @@ var prettier = _interopDefault(require('prettier'));
@@ -126,17 +126,18 @@ index d28e499..8cdfa4b 100644
            } else {
              const {
                test,
-@@ -453,26 +513,31 @@ const transform = function (ast) {
+@@ -453,26 +513,23 @@ const transform = function (ast) {
                line,
                column
              } = node;
 -            nodes = [!endBlock ? {
-+            replacement = [needWrap(nodes) ? {
-               type: 'Text',
-               val: '{',
-               line,
-               column
-             } : null, {
+-              type: 'Text',
+-              val: '{',
+-              line,
+-              column
+-            } : null, {
++            consequent.nodes = isFragmentRequired(consequent.nodes) ? wrapInFragment(consequent.nodes) : consequent.nodes;
++            replacement = [{
                type: 'Text',
 -              val: `${node.test} && (`,
 +              val: `${transformGetFn(node.test)} && (`,
@@ -147,14 +148,11 @@ index d28e499..8cdfa4b 100644
                type: 'Text',
 -              val: ')}',
 +              val: ')',
-+              line,
-+              column
-+            }, needWrap(nodes) ? {
-+              type: 'Text',
-+              val: '}',
                line,
                column
-             } : null].filter(Boolean);
+-            } : null].filter(Boolean);
++            }];
++            replacement = isBracketsRequired(nodes) ? wrapInBrackets(replacement) : replacement;
            }
  
 -          replace(nodes);
@@ -164,73 +162,124 @@ index d28e499..8cdfa4b 100644
          }
          break;
  
-@@ -486,14 +551,14 @@ const transform = function (ast) {
+@@ -486,14 +543,9 @@ const transform = function (ast) {
              line,
              column
            } = node;
 -          const nodes = [!endBlock ? {
-+          const replacement = [needWrap(nodes) ? {
++          const replacement = [{
              type: 'Text',
-             val: '{',
-             line,
-             column
-           } : null, {
-             type: 'Text',
+-            val: '{',
+-            line,
+-            column
+-          } : null, {
+-            type: 'Text',
 -            val: `__macro.for(${obj}).map((${val}${key ? `, ${key}` : ''}) => (`,
 +            val: `__macro.for(${transformGetFn(obj)}).map((${val}${key ? `, ${key}` : ''}) => (`,
              line,
              column
            }, block, {
-@@ -501,14 +566,14 @@ const transform = function (ast) {
+@@ -501,14 +553,9 @@ const transform = function (ast) {
              val: '))',
              line,
              column
 -          }, !endBlock ? {
-+          }, needWrap(nodes) ? {
-             type: 'Text',
-             val: '}',
-             line,
-             column
-           } : null].filter(Boolean);
+-            type: 'Text',
+-            val: '}',
+-            line,
+-            column
+-          } : null].filter(Boolean);
 -          replace(nodes);
 -          endBlock = endBlock || nodes[nodes.length - 1];
-+          replace(replacement);
++          }];
++          replace(isBracketsRequired(nodes) ? wrapInBrackets(replacement) : replacement);
 +          node._last = replacement[replacement.length - 1];
          }
          break;
  
-@@ -521,7 +586,7 @@ const transform = function (ast) {
+@@ -521,42 +568,40 @@ const transform = function (ast) {
              line,
              column
            } = node;
 -          const nodes = [!endBlock ? {
-+          const replacement = [needWrap(nodes) ? {
+-            type: 'Text',
+-            val: '{',
+-            line,
+-            column
+-          } : null, {
++          const replacement = [{
              type: 'Text',
-             val: '{',
+             val: '(() => {\n',
              line,
-@@ -533,7 +598,7 @@ const transform = function (ast) {
              column
            }, {
              type: 'Text',
 -            val: `switch (${expr}) {\n`,
+-            line,
+-            column
+-          }, ...block.nodes.map(node => [node.expr !== 'default' ? {
+-            type: 'Text',
+-            val: `case ${node.expr}:\n`,
+-            line,
+-            column
+-          } : {
+-            type: 'Text',
+-            val: 'default:\n',
+-            line,
+-            column
+-          }, {
+-            type: 'Text',
+-            val: 'return (',
+-            line,
+-            column
+-          }, node.block, {
+-            type: 'Text',
+-            val: ');\n',
 +            val: `switch (${transformGetFn(expr)}) {\n`,
              line,
              column
-           }, ...block.nodes.map(node => [node.expr !== 'default' ? {
-@@ -571,31 +636,70 @@ const transform = function (ast) {
+-          }]), {
++          }, ...block.nodes.map(node => {
++            node.block.nodes = isFragmentRequired(node.block.nodes) ? wrapInFragment(node.block.nodes) : node.block.nodes;
++            return [node.expr !== 'default' ? {
++              type: 'Text',
++              val: `case ${node.expr}:\n`,
++              line,
++              column
++            } : {
++              type: 'Text',
++              val: 'default:\n',
++              line,
++              column
++            }, {
++              type: 'Text',
++              val: 'return (',
++              line,
++              column
++            }, node.block, {
++              type: 'Text',
++              val: ');\n',
++              line,
++              column
++            }];
++          }), {
+             type: 'Text',
+             val: '}\n',
+             line,
+@@ -571,31 +616,93 @@ const transform = function (ast) {
              val: '})()',
              line,
              column
 -          }, !endBlock ? {
-+          }, needWrap(nodes) ? {
-             type: 'Text',
-             val: '}',
-             line,
-             column
-           } : null].filter(Boolean);
+-            type: 'Text',
+-            val: '}',
+-            line,
+-            column
+-          } : null].filter(Boolean);
 -          replace(nodes);
 -          endBlock = endBlock || nodes[nodes.length - 1];
-+          replace(replacement);
++          }];
++          replace(isBracketsRequired(nodes) ? wrapInBrackets(replacement) : replacement);
 +          node._last = replacement[replacement.length - 1];
          }
          break;
@@ -279,11 +328,39 @@ index d28e499..8cdfa4b 100644
 +  return str;
 +}
 +
-+function needWrap(nodes) {
++function isBracketsRequired(nodes) {
 +  const {
 +    type
 +  } = nodes[0] || {};
 +  return !type || type === 'Tag';
++}
++
++function wrapInBrackets(nodes) {
++  return [{
++    type: 'Text',
++    val: '{'
++  }, ...nodes, {
++    type: 'Text',
++    val: '}'
++  }];
++}
++
++function isFragmentRequired(nodes) {
++  const [node] = nodes;
++  return nodes.length > 1 || node && node.type === 'Text';
++}
++
++function wrapInFragment(nodes) {
++  return [{
++    type: 'Tag',
++    name: 'Fragment',
++    block: {
++      type: 'Block',
++      nodes
++    },
++    attrs: [],
++    attributeBlocks: []
++  }];
 +}
 +
 +function getConditionalNodes(node, nodes) {
@@ -295,24 +372,26 @@ index d28e499..8cdfa4b 100644
      line,
      column
    } = node;
-@@ -614,14 +718,14 @@ function getConditionalNodes(node, endBlock, deep) {
+@@ -614,14 +721,11 @@ function getConditionalNodes(node, endBlock, deep) {
      }];
    }
  
 -  return [!deep && !endBlock ? {
-+  return [needWrap(nodes) ? {
++  consequent.nodes = isFragmentRequired(consequent.nodes) ? wrapInFragment(consequent.nodes) : consequent.nodes;
++  const required = isBracketsRequired(nodes);
++  nodes = [{
      type: 'Text',
-     val: '{',
-     line,
-     column
-   } : null, {
-     type: 'Text',
+-    val: '{',
+-    line,
+-    column
+-  } : null, {
+-    type: 'Text',
 -    val: `${node.test} ? `,
 +    val: `${transformGetFn(node.test)} ? `,
      line,
      column
    }, ...[{
-@@ -639,12 +743,12 @@ function getConditionalNodes(node, endBlock, deep) {
+@@ -639,17 +743,28 @@ function getConditionalNodes(node, endBlock, deep) {
      val: ' : ',
      line,
      column
@@ -323,25 +402,32 @@ index d28e499..8cdfa4b 100644
      line,
      column
 -  }] : getConditionalNodes(alternate, endBlock, true)), !deep && !endBlock ? {
-+  }] : getConditionalChildNodes(node, nodes)), needWrap(nodes) ? {
-     type: 'Text',
-     val: '}',
-     line,
-@@ -652,6 +756,13 @@ function getConditionalNodes(node, endBlock, deep) {
-   } : null].filter(Boolean);
- }
- 
-+function getConditionalChildNodes(node, nodes) {
-+  nodes.unshift(node);
-+  const result = getConditionalNodes(node.alternate, nodes);
-+  nodes.shift();
-+  return result;
+-    type: 'Text',
+-    val: '}',
+-    line,
+-    column
+-  } : null].filter(Boolean);
++  }] : getConditionalChildNodes(node, nodes))];
++  return required ? wrapInBrackets(nodes) : nodes;
 +}
 +
++function getConditionalChildNodes(node, nodes) {
++  const {
++    alternate
++  } = node;
++
++  if (alternate.nodes) {
++    alternate.nodes = isFragmentRequired(alternate.nodes) ? wrapInFragment(alternate.nodes) : alternate.nodes;
++  }
++
++  nodes.unshift(node);
++  const result = getConditionalNodes(alternate, nodes);
++  nodes.shift();
++  return result;
+ }
+ 
  const macro = `const __macro = {
-   for: items => ({
-     map: (mapFn) => {
-@@ -689,7 +800,7 @@ const works = [// combine the contents of two className attributes.
+@@ -689,7 +804,7 @@ const works = [// combine the contents of two className attributes.
    pre: [/\{([^{}]+)\}/g, (context, whole, p1) => {
      const content = p1.replace(/^\{(.*)\}$/, '$1').replace(/\n\s+\|\s+/g, ' ').replace(/\\\n\s+/g, ' ');
      const key = hashCode(content);
@@ -350,7 +436,7 @@ index d28e499..8cdfa4b 100644
      return `{__archived_${key}__}`;
    }],
    post: [/\{__archived_([a-z0-9]+)__\}/g, (context, whole, p1) => `{${context[p1]}}`]
-@@ -885,6 +996,18 @@ const resolveModule = (moduleName, rootDir) => {
+@@ -885,6 +1000,18 @@ const resolveModule = (moduleName, rootDir) => {
    return moduleName;
  };
  
@@ -369,7 +455,7 @@ index d28e499..8cdfa4b 100644
  const toJsx = (source, options = {}) => {
    const localWorks = works.map(({
      pre,
-@@ -970,7 +1093,9 @@ const toJsx = (source, options = {}) => {
+@@ -970,7 +1097,9 @@ const toJsx = (source, options = {}) => {
  
    let jsxCode = `\n${pug.render(pugCode, {
      pretty: true,
@@ -380,7 +466,7 @@ index d28e499..8cdfa4b 100644
    })}\n`; // post-processing pug.render
    // post-processing is performed in the reverse order of pre-processing
  
-@@ -1027,6 +1152,11 @@ const toJsx = (source, options = {}) => {
+@@ -1027,6 +1156,11 @@ const toJsx = (source, options = {}) => {
        imports
      } = getImports(analyzed.variables, resolves);
      const variables = analyzed.variables.filter(e => used.indexOf(e) === -1);
@@ -392,7 +478,7 @@ index d28e499..8cdfa4b 100644
      result = { ...result,
        ...analyzed,
        variables,
-@@ -1078,6 +1208,37 @@ const pugToJsx = (source, userOptions = {}) => {
+@@ -1078,6 +1212,37 @@ const pugToJsx = (source, userOptions = {}) => {
    const [_module, _import] = getPragma(options.pragma);
  
    if (options.template) {
