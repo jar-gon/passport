@@ -14,12 +14,16 @@ import '~/icons'
 
 class App extends NextApp<AppProps> {
   static async getInitialProps({ Component, ctx }: NextJSAppContext) {
-    let isvName = serverRuntimeConfig.isv
-    if (!dev && !isvName) {
-      isvName = !ctx.req ? window.location.hostname : ctx.req.headers.host.split(':')[0]
+    const { store } = ctx
+    if (!store.getState().isvName) {
+      let isvName = serverRuntimeConfig.isv
+      if (!dev && !isvName) {
+        isvName = !ctx.req ? window.location.hostname : ctx.req.headers.host.split(':')[0]
+      }
+      store.dispatch({ type: 'isvName', value: isvName })
+      store.dispatch({ type: 'homeUrl', value: serverRuntimeConfig.home })
+      store.dispatch({ type: 'consoleUrl', value: serverRuntimeConfig.console })
     }
-    ctx.store.dispatch({ type: 'isvName', value: isvName })
-    ctx.store.dispatch({ type: 'homeUrl', value: serverRuntimeConfig.home })
     const pageProps = await loadGetInitialProps(Component, ctx)
     return { pageProps }
   }
