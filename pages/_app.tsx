@@ -21,8 +21,8 @@ class App extends NextApp<AppProps> {
         isvName = !ctx.req ? window.location.hostname : ctx.req.headers.host.split(':')[0]
       }
       store.dispatch({ type: 'isvName', value: isvName })
+      store.dispatch({ type: 'domain', value: serverRuntimeConfig.domain })
       store.dispatch({ type: 'homeUrl', value: serverRuntimeConfig.home })
-      store.dispatch({ type: 'consoleUrl', value: serverRuntimeConfig.console })
     }
     const pageProps = await loadGetInitialProps(Component, ctx)
     return { pageProps }

@@ -3,11 +3,13 @@ import { NextJSContext } from 'next-redux-wrapper/es6'
 
 interface State {
   isvName: string
+  domain: string
   homeUrl: string
 }
 
 const INITIAL_STATE: State = {
   isvName: '',
+  domain: '',
   homeUrl: '',
 }
 
@@ -15,6 +17,8 @@ function reducer(state = INITIAL_STATE, action: AnyAction): State {
   switch (action.type) {
     case 'isvName':
       return { ...state, isvName: action.value }
+    case 'domain':
+      return { ...state, domain: action.value }
     case 'homeUrl':
       return { ...state, homeUrl: action.value }
     default:

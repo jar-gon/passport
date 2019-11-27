@@ -11,7 +11,6 @@ import { autobind } from '@billypon/react-decorator'
 import { mapState, ConnectedProps } from '~/utils/redux'
 import { storage, checkLogin } from '~/utils/storage'
 import { NoCaptcha } from '~/utils/captcha'
-import { publicRuntimeConfig } from '~/utils/config'
 
 import AccountApi from '~/apis/account'
 import { ApiResult } from '~/models/api'
@@ -24,7 +23,7 @@ interface LoginState {
   errorMessage: string
 }
 
-@connect(mapState)
+@connect(mapState([ 'domain' ]))
 class Login extends Component<ConnectedProps, LoginState> {
   accountApi: AccountApi
   form = new FormComponentRef()
@@ -94,7 +93,7 @@ class Login extends Component<ConnectedProps, LoginState> {
     let { redirect } = getQueryParams()
     if (/(https?:)?\/\//.test(redirect)) {
       const { hostname } = window.location
-      const { domain } = publicRuntimeConfig
+      const { domain } = this.props
       if (domain) {
         if (matcher([ hostname ], domain.split(',')).length) {
           const params = {
