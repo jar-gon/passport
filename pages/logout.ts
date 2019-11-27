@@ -11,7 +11,8 @@ import AccountApi from '~/apis/account'
 @connect(mapState)
 class Logout extends Component<ConnectedProps> {
   componentDidMount() {
-    if (storage.token) {
+    const { token } = getQueryParams()
+    if (storage.token && (!token || storage.token === token)) {
       const accountApi = new AccountApi(this.props.isvName)
       accountApi.logout(storage.token).subscribe(() => {
         storage.token = null
