@@ -3,7 +3,7 @@ SiteLayout(footer=false)
     if state.states
       .account-wrapper
         .account-wrapper-slogan 欢迎登录 CloudEMPower
-        FormComponent($ref=form states=state.states onSubmit=onSubmit layout="vertical")
+        FormComponent(_ref=form states=state.states onSubmit=onSubmit layout="vertical")
         #noCaptchaCode.slide-verify-code
         if state.errorMessage
           .account--error= state.errorMessage
