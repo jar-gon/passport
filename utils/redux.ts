@@ -1,5 +1,6 @@
-import { createStore, AnyAction } from 'redux/es/redux'
+import { createStore, Store, AnyAction } from 'redux/es/redux'
 import { NextJSContext } from 'next-redux-wrapper/es6'
+import { browser } from '@billypon/react-utils/common'
 
 interface State {
   isvName: string
@@ -26,8 +27,14 @@ function reducer(state = INITIAL_STATE, action: AnyAction): State {
   }
 }
 
+export const store: { default?: Store } = { }
+
 export function initializeStore(initialState = INITIAL_STATE) {
-  return createStore(reducer, initialState)
+  if (!browser) {
+    return createStore(reducer, initialState)
+  }
+  store.default = store.default || createStore(reducer, initialState)
+  return store.default
 }
 
 export interface WithReduxContext extends NextJSContext<State, AnyAction> {
