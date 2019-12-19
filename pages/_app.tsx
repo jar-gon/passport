@@ -2,6 +2,7 @@ import NextApp from 'next/app'
 import { loadGetInitialProps } from 'next/dist/next-server/lib/utils'
 import { Provider } from 'react-redux/es'
 import withRedux, { NextJSAppContext, AppProps } from 'next-redux-wrapper/es6'
+import { ConfigProvider } from 'antd/es/index'
 import { dev } from '@billypon/react-utils/common'
 import '@billypon/react-utils/axios'
 
@@ -31,9 +32,11 @@ class App extends NextApp<AppProps> {
   render() {
     const { Component, pageProps, store } = this.props
     return (
-      <Provider store={ store }>
-        <Component { ...pageProps } />
-      </Provider>
+      <ConfigProvider autoInsertSpaceInButton={ false }>
+        <Provider store={ store }>
+          <Component { ...pageProps } />
+        </Provider>
+      </ConfigProvider>
     )
   }
 }
