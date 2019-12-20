@@ -9,7 +9,7 @@ if [ "$1" != ssr ]; then
 else
   echo "const json = require('../package.json'); delete json.scripts; console.log(JSON.stringify(json))" | node > package.json
   cp ../yarn.lock .
-  yarn --prod
+  yarn --prod --prefer-offline
   rm -r package.json yarn.lock .next/cache .next/records.json .next/server/records.json
   mkdir pages
   cp -a ../static .
