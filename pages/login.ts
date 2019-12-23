@@ -3,13 +3,13 @@ import { connect } from 'react-redux/es'
 import qs from 'qs'
 import matcher from 'matcher'
 import { Component } from '@billypon/react-utils/react'
-import FormComponent, { FormComponentRef, FormState } from '@billypon/react-utils/form-component'
-import { browser, getQueryParams } from '@billypon/react-utils/common'
+import SimpleForm, { SimpleFormRef, FormState } from '@billypon/react-utils/simple-form'
+import { browser, getQueryParams, buildUrl } from '@billypon/react-utils/common'
 import { Dictionary } from '@billypon/ts-types'
 import { autobind } from '@billypon/react-decorator'
 
 import { mapState, ConnectedProps } from '~/utils/redux'
-import { storage, checkLogin } from '~/utils/storage'
+import { storage, checkLogin, setTempLogin } from '~/utils/storage'
 import { NoCaptcha } from '~/utils/captcha'
 
 import AccountApi from '~/apis/account'
@@ -26,7 +26,7 @@ interface LoginState {
 @connect(mapState([ 'domain' ]))
 class Login extends Component<ConnectedProps, LoginState> {
   accountApi: AccountApi
-  form = new FormComponentRef()
+  form = new SimpleFormRef()
   captcha: NoCaptcha;
 
   getInitialState() {
@@ -77,7 +77,12 @@ class Login extends Component<ConnectedProps, LoginState> {
       sig,
       this.captcha.data.token,
     ).subscribe(
-      ({ token, isvId }) => {
+      ({ token, isvId, reset }) => {
+        if (reset || !reset) {
+          setTempLogin(token, isvId)
+          this.redirectToPassword()
+          return
+        }
         storage.token = token
         storage.isv = isvId
         this.redirectFromLogin()
@@ -111,8 +116,17 @@ class Login extends Component<ConnectedProps, LoginState> {
     router.replace(redirect || '/')
   }
 
+  redirectToPassword(): void {
+    const { redirect } = getQueryParams()
+    const url = buildUrl({
+      path: '/password',
+      query: redirect && { redirect },
+    })
+    router.push(url)
+  }
+
   render() {
-    return template.call(this, { ...this, SiteLayout, FormComponent })
+    return template.call(this, { ...this, SiteLayout, SimpleForm })
   }
 }
 
