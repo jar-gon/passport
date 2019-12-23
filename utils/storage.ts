@@ -48,3 +48,12 @@ export const storage = new Storage
 export function checkLogin(): boolean {
   return localStorage.token && localStorage.isv
 }
+
+export function setTempLogin(token: string, isvId: string) {
+  sessionStorage.token = token
+  sessionStorage.isv = isvId
+}
+
+export function checkTempLogin(): boolean {
+  return sessionStorage.token && sessionStorage.isv
+}

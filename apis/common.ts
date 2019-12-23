@@ -3,7 +3,7 @@ import { useInterceptors } from '@billypon/react-utils/axios'
 import { browser, replaceToLogout } from '@billypon/react-utils/common'
 import { Dictionary } from '@billypon/ts-types'
 
-import { storage, checkLogin } from '~/utils/storage'
+import { storage, checkLogin, checkTempLogin } from '~/utils/storage'
 import { publicRuntimeConfig } from '~/utils/config'
 import { INVALID_TOKEN } from '~/utils/api-errors'
 
@@ -12,14 +12,14 @@ export default class {
 
   constructor(isvName: string) {
     let headers: Dictionary
-    if (!browser || !checkLogin()) {
+    if (!browser || (!checkLogin() && !checkTempLogin())) {
       headers = {
         'Yunq-ISV-Name': isvName,
       }
     } else {
       headers = {
-        'Yunq-Authenticate': storage.token,
-        'Yunq-ISV': storage.isv,
+        'Yunq-Authenticate': storage.token || sessionStorage.token,
+        'Yunq-ISV': storage.isv || sessionStorage.isv,
       }
     }
     this.axios = Axios.create({ baseURL: this.getBaseUrl(), headers })

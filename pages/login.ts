@@ -78,7 +78,7 @@ class Login extends Component<ConnectedProps, LoginState> {
       this.captcha.data.token,
     ).subscribe(
       ({ token, isvId, reset }) => {
-        if (reset || !reset) {
+        if (reset) {
           setTempLogin(token, isvId)
           this.redirectToPassword()
           return
