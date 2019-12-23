@@ -6,7 +6,7 @@ const { execSync } = require('child_process')
 const dirs = [ 'pages', 'components', 'modals' ].join(' ' )
 
 const modules = {
-  Form: { name: 'Form(X|Item|Field)' },
+  Form: { name: 'Form(X|Item|Field)|SimpleForm' },
   Input: { include: true },
   Modal: { regexp: 'react-utils/modal' },
   Table: { name: 'SimpleTable' },
