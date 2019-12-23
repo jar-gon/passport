@@ -16,18 +16,18 @@ function grep(regexp, files = dirs) {
 }
 
 const antd = {
-  names: Object.keys(require('antd')).filter(x => /^[A-Z]/.test(x)),
+  names: Object.keys(require('antd')).filter(x => /^[A-Z]/.test(x)).concat([ 'Notification' ]),
   styles: { },
 };
 antd.names.forEach(name => {
-  const module = name[0].toLowerCase() + name.substr(1).replace(/[A-Z]/g, c => `-${c.toLowerCase()}`);
+  const module = name[0].toLowerCase() + name.substr(1).replace(/[A-Z]/g, c => `-${ c.toLowerCase() }`);
   antd.styles[name] = `@import '~antd/es/${ module }/style/index.less';\n`
 });
 
 const styles = antd.names
   .filter(name => {
     const module = modules[name] || { }
-    return [
+    return module.include || [
       grep(`^[ \\t]*${ !module.name ? name : `(${ name }|${ module.name })` }(-.+)?(#[^#.( ]+)?(\\.[^#.( ]+)?(\\(| |$)`),
       module.regexp && grep(module.regexp),
     ].some(x => x && execSync(x, { encoding: 'utf-8' }))
