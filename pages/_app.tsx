@@ -38,20 +38,26 @@ function getIsvInfo(isvInfo: IsvInfo) {
 class App extends NextApp<AppProps> {
   static async getInitialProps({ Component, ctx }: NextJSAppContext) {
     const { store } = ctx
+    const state = store.getState()
 
-    let isvName = serverRuntimeConfig.isv
-    if (!dev && !isvName) {
-      isvName = !ctx.req ? window.location.hostname : ctx.req.headers.host.split(':')[0]
+    let isvName: string = state.isvName
+    if (!isvName) {
+      isvName = serverRuntimeConfig.isv
+      if (!dev && !isvName) {
+        isvName = !ctx.req ? window.location.hostname : ctx.req.headers.host.split(':')[0]
+      }
+      store.dispatch({ type: 'isvName', value: isvName })
     }
-    store.dispatch({ type: 'isvName', value: isvName })
 
-    let isvInfo: IsvInfo
-    try {
-      const accountApi = new AccountApi(isvName)
-      isvInfo = await accountApi.getIsvInfo().toPromise()
-    } catch (err) {
+    let isvInfo: IsvInfo = state.isvInfo
+    if (!isvInfo) {
+      try {
+        const accountApi = new AccountApi(isvName)
+        isvInfo = await accountApi.getIsvInfo().toPromise()
+      } catch (err) {
+      }
+      store.dispatch({ type: 'isvInfo', value: getIsvInfo(isvInfo) })
     }
-    store.dispatch({ type: 'isvInfo', value: getIsvInfo(isvInfo) })
 
     const pageProps = await loadGetInitialProps(Component, ctx)
 
