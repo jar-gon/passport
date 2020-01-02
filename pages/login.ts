@@ -23,7 +23,7 @@ interface LoginState {
   errorMessage: string
 }
 
-@connect(mapState([ 'domain' ]))
+@connect(mapState)
 class Login extends Component<ConnectedProps, LoginState> {
   accountApi: AccountApi
   form = new SimpleFormRef()
@@ -95,12 +95,12 @@ class Login extends Component<ConnectedProps, LoginState> {
   }
 
   redirectFromLogin(): void {
+    const { isvInfo } = this.props
     let { redirect } = getQueryParams()
     if (/(https?:)?\/\//.test(redirect)) {
       const { hostname } = window.location
-      const { domain } = this.props
-      if (domain) {
-        if (matcher([ hostname ], domain.split(',')).length) {
+      if (isvInfo.domain) {
+        if (matcher([ hostname ], isvInfo.domain.split(',')).length) {
           const params = {
             token: storage.token,
             isv: storage.isv,

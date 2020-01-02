@@ -5,11 +5,16 @@ import { Observable } from 'rxjs'
 import Api from './common'
 import { AccountApiClass } from '~/utils/api'
 import { Account, LoginInfo } from '~/models/account'
+import { IsvInfo } from '~/models/isv-info'
 
 @AccountApiClass
 class AccountApi extends Api {
   getInfo(): Observable<Account> {
     return this.axios.get('/account/info') as any
+  }
+
+  getIsvInfo(): Observable<IsvInfo> {
+    return this.axios.get('/isv-info') as any
   }
 
   login(username: string, password: string, isv: string, sessionId: string, scene: string, sig: string, token: string): Observable<LoginInfo> {

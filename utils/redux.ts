@@ -2,26 +2,34 @@ import { createStore, Store, AnyAction } from 'redux/es/redux'
 import { NextJSContext } from 'next-redux-wrapper/es6'
 import { browser } from '@billypon/react-utils/common'
 
+import { zipObject } from './array'
+
+export interface IsvInfo {
+  name: string
+  keyword: string
+  description: string
+  favicon: string
+  logo: string
+  domain: string
+  home: string
+}
+
 interface State {
   isvName: string
-  domain: string
-  homeUrl: string
+  isvInfo: Partial<IsvInfo>
 }
 
 const INITIAL_STATE: State = {
   isvName: '',
-  domain: '',
-  homeUrl: '',
+  isvInfo: { },
 }
 
 function reducer(state = INITIAL_STATE, action: AnyAction): State {
   switch (action.type) {
     case 'isvName':
       return { ...state, isvName: action.value }
-    case 'domain':
-      return { ...state, domain: action.value }
-    case 'homeUrl':
-      return { ...state, homeUrl: action.value }
+    case 'isvInfo':
+      return { ...state, isvInfo: action.value }
     default:
       return state
   }
@@ -43,13 +51,11 @@ export interface WithReduxContext extends NextJSContext<State, AnyAction> {
 export interface ConnectedProps extends State {
 }
 
+const defaultKeys = [ 'isvName', 'isvInfo' ]
+
 export function mapState(keys: string[] = [ ]): (state: State) => Partial<ConnectedProps> {
   return (state: State) => {
-    if (!keys.length) {
-      return { isvName: state.isvName }
-    }
-    const newState = { } as State
-    Object.keys(state).filter(x => x === 'isvName' || keys.includes(x)).forEach(x => newState[x] = state[x])
-    return newState
+    const mapKeys = defaultKeys.concat(keys)
+    return zipObject(mapKeys, mapKeys.map(x => state[x]))
   }
 }

@@ -31,7 +31,8 @@ function destroy(token: string) {
 
 export default function () {
   if (browser && window !== window.parent) {
-    const domains = store.default.getState().domain.split(',')
+    const { isvInfo } = store.default.getState()
+    const domains = isvInfo.domain.split(',')
     window.addEventListener('message', (event: MessageEvent) => {
       const { origin } = event
       const source = event.source as WindowProxy
