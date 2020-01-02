@@ -11,8 +11,9 @@ interface DocumentProps {
 }
 
 export default class extends Document<DocumentProps> {
-  static async getInitialProps(ctx: WithReduxContext): Promise<DocumentInitialProps & DocumentProps> {
-    const { isvInfo } = ctx.store.getState()
+  static async getInitialProps(ctx): Promise<DocumentInitialProps & DocumentProps> {
+    const { store } = ctx as unknown as WithReduxContext
+    const { isvInfo } = store.getState()
     const { keyword, description, favicon } = isvInfo
     const props = await Document.getInitialProps(ctx)
     return {
