@@ -19,10 +19,8 @@ interface State {
   isvInfo: Partial<IsvInfo>
 }
 
-const INITIAL_STATE: State = {
-  isvName: '',
-  isvInfo: { },
-}
+const INITIAL_STATE = {
+} as State
 
 function reducer(state = INITIAL_STATE, action: AnyAction): State {
   switch (action.type) {
