@@ -2,7 +2,7 @@ SiteLayout(footer=false)
   .account.login
     if state.states
       .account-wrapper
-        .account-wrapper-slogan 欢迎注册 CloudEMPower
+        .account-wrapper-slogan 欢迎注册 #{ props.isvInfo.name }
         SimpleForm(_ref=form states=state.states onSubmit=onSubmit layout="vertical")
         if state.errorMessage
           .account--error= state.errorMessage
