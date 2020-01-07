@@ -11,6 +11,7 @@ import { autobind } from '@billypon/react-decorator'
 import { mapState, ConnectedProps } from '~/utils/redux'
 import { storage, checkLogin, setTempLogin } from '~/utils/storage'
 import { NoCaptcha } from '~/utils/captcha'
+import { getRedirectQuery } from '~/utils/common'
 
 import AccountApi from '~/apis/account'
 import { ApiResult } from '~/models/api'
@@ -21,6 +22,7 @@ import template from './login.pug'
 interface LoginState {
   states: Dictionary<FormState>
   errorMessage: string
+  redirectQuery: string
 }
 
 @connect(mapState)
@@ -30,8 +32,9 @@ class Login extends Component<ConnectedProps, LoginState> {
   captcha: NoCaptcha;
 
   getInitialState() {
+    const redirectQuery = getRedirectQuery()
     if (!browser) {
-      return super.getInitialState()
+      return { redirectQuery }
     }
     const states: Dictionary<FormState> = {
       username: {
@@ -48,7 +51,7 @@ class Login extends Component<ConnectedProps, LoginState> {
         ],
       },
     }
-    return { states }
+    return { states, redirectQuery }
   }
 
   componentDidMount() {
