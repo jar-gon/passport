@@ -1,0 +1,38 @@
+SiteLayout(footer=false)
+  .account.login
+    if state.states
+      .account-wrapper
+        .account-wrapper-slogan 欢迎注册 CloudEMPower
+        SimpleForm(_ref=form states=state.states onSubmit=onSubmit layout="vertical")
+        if state.errorMessage
+          .account--error= state.errorMessage
+        Button(type="primary" size="large" onClick=form.submit loading=form.isLoading() disabled=form.isLoading()) 立即注册
+        .margin-top_20 已有帐号，
+          Link(href=`/login${ state.redirectQuery }`): a 请点击登入
+          | 。
+
+Template(ref=this.usernameTpl)
+  FragmentWrap
+    FragmentWrap:render(as=(_props, _itemProps))
+      Popover(placement="rightTop" trigger="focus")
+        Input(..._props onBlur=_itemProps.validate)
+        Popover:content
+          ul.popover-ul_disc
+            li 5-32个英文字符或数字。
+            li 只能以字母开头。
+            li 请勿包含身份证/银行卡等隐私信息，一旦设置成功无法修改。
+
+Template(ref=this.verifyCodeTpl)
+  FragmentWrap
+    FragmentWrap:render(as=(_props, _itemProps))
+      Input(..._props maxLength=_itemProps.field.addition.maxLength onBlur=_itemProps.validate)
+        Input:suffix
+          if !this.state.sendTime
+            div(onClick=sendVerifyCode) 获取验证码
+          else
+            .ant-input-suffix-disabled 已发送(#{ this.state.sendTime })
+
+//Template(ref=this.agreementTpl)
+//  FragmentWrap
+//    FragmentWrap:render(as=(_props, _itemProps))
+//      Checkbox(..._props onChange=combineFunctions(_props.onChange, _itemProps.validate))= _itemProps.field.placeholder

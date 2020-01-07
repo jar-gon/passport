@@ -1,5 +1,7 @@
 import { ValidatorFn } from '@billypon/react-utils/form'
 
+export const mobile = /^1[^1269]\d{9}$/
+
 export function password(slash = true): ValidatorFn<string> {
   // eslint-disable-next-line no-useless-escape
   const symbol = slash ? /[()`~!@#$%^&*\-_+=|{}\[\]:;'<>,.?/]/ : /[()`~!@#$%^&*\-_+=|{}\[\]:;'<>,.?]/
