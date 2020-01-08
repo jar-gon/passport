@@ -8,6 +8,6 @@ SiteLayout(footer=false)
         if state.errorMessage
           .account--error= state.errorMessage
         Button(type="primary" size="large" onClick=form.submit loading=form.isLoading() disabled=form.isLoading()) 登录
-        .margin-top_20
+        .account--links
           Link(href=`/register${ state.redirectQuery }`): a 立即注册
           //Link(href="/forget-password"): a 忘记密码

@@ -7,7 +7,7 @@ SiteLayout(footer=false)
         if state.errorMessage
           .account--error= state.errorMessage
         Button(type="primary" size="large" onClick=form.submit loading=form.isLoading() disabled=form.isLoading()) 立即注册
-        .margin-top_20 已有帐号，
+        .account--links 已有帐号，
           Link(href=`/login${ state.redirectQuery }`): a 请点击登入
           | 。
 
