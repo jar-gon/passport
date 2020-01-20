@@ -23,6 +23,7 @@
     "next": "9.0.7",
     "pino": "5.14.0",
     "pino-pretty": "3.4.0",
+    "pug-as-jsx-utils": "1.0.36",
     "qs": "6.9.0",
     "react": "16.10.1",
     "react-dom": "16.10.1",

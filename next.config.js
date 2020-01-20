@@ -49,6 +49,7 @@ module.exports = withPlugins([
         '@billypon/react-template',
         '@billypon/react-decorator',
         'lodash-es',
+        'pug-as-jsx-utils/src/lib/macro',
       ],
     }
   ],

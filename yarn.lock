@@ -7624,7 +7624,7 @@ pug-as-jsx-loader@1.0.79:
     pug-as-jsx-utils "^1.0.36"
     recast "^0.18.1"
 
-pug-as-jsx-utils@^1.0.36:
+pug-as-jsx-utils@1.0.36, pug-as-jsx-utils@^1.0.36:
   version "1.0.36"
   resolved "https://registry.yarnpkg.com/pug-as-jsx-utils/-/pug-as-jsx-utils-1.0.36.tgz#27e66fbd8f415855772a0dc32ff340100b346036"
   integrity sha512-B+7snPP6dl/WrxOT5+ZikMDZ/LjkudIWtokpxcf/xA1e5PLn5In8YxLWjnP4PcwmbpCGrQb1Iv3xJwofCDSoQg==
