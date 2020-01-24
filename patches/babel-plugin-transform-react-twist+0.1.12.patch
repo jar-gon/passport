@@ -13,7 +13,7 @@ index 4bf6eaa..e533132 100644
          if (!args || !path.node.children) {
              return;
 diff --git a/node_modules/babel-plugin-transform-react-twist/src/transforms/NamedChildrenTransform.js b/node_modules/babel-plugin-transform-react-twist/src/transforms/NamedChildrenTransform.js
-index 591d67b..7a254ce 100644
+index 0ae649d..b269720 100644
 --- a/node_modules/babel-plugin-transform-react-twist/src/transforms/NamedChildrenTransform.js
 +++ b/node_modules/babel-plugin-transform-react-twist/src/transforms/NamedChildrenTransform.js
 @@ -14,17 +14,31 @@

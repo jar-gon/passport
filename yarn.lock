@@ -2084,10 +2084,10 @@ babel-plugin-transform-react-remove-prop-types@0.4.24:
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.24.tgz#f2edaf9b4c6a5fbe5c1d678bfb531078c1555f3a"
   integrity sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==
 
-babel-plugin-transform-react-twist@0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-twist/-/babel-plugin-transform-react-twist-0.1.11.tgz#40124159d3758b46e62490a74c4145698ee1d3a5"
-  integrity sha512-jYs5nFpXc0JemsiA6thVvfocbnH8v3LW0l92+8/4GIASjNf2O3lHGCoIMNVFwIPpx2guW3S2+36lAmyP0BzfXw==
+babel-plugin-transform-react-twist@0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-twist/-/babel-plugin-transform-react-twist-0.1.12.tgz#82f7b7ee0e9ddab675b3b08f564e2fe10776086b"
+  integrity sha512-wcx6XB/5zAelo9egLftFbUdC6C9zxJYhJZZEWAp4TfoodIOovMxrWown2mcgt9QkMCpZgEk1jrG4KAX/MZ80Cw==
   dependencies:
     "@twist/babel-plugin-transform" "0.2.2"
     babel-core "^6.26.0"
