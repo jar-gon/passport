@@ -122,7 +122,7 @@ class Login extends Component<ConnectedProps, LoginState> {
   redirectToPassword(): void {
     const { redirect } = getQueryParams()
     const url = buildUrl({
-      path: '/password',
+      path: '/update-password',
       query: redirect && { redirect },
     })
     router.push(url)

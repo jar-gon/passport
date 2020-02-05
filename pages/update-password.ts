@@ -16,16 +16,16 @@ import { ApiResult } from '~/models/api'
 import { Account } from '~/models/account'
 
 import SiteLayout from '~/components/layout'
-import template from './password.pug'
+import template from './update-password.pug'
 
-interface PasswordState {
+interface UpdatePasswordState {
   states: Dictionary<FormState>
   errorMessage: string
   account: Account
 }
 
 @connect(mapState)
-class Password extends Component<ConnectedProps, PasswordState> {
+class UpdatePassword extends Component<ConnectedProps, UpdatePasswordState> {
   accountApi: AccountApi
   form = new SimpleFormRef()
 
@@ -105,4 +105,4 @@ class Password extends Component<ConnectedProps, PasswordState> {
   }
 }
 
-export default Password
+export default UpdatePassword
