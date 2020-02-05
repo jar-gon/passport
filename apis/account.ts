@@ -21,6 +21,15 @@ export interface ValidateCode {
   status: boolean // false=重复发送
 }
 
+export interface ResetToken {
+  token: string
+}
+
+export interface ResetTokenInfo {
+  username: string
+  mobile: string
+}
+
 @AccountApiClass
 class AccountApi extends Api {
   createAccount(data: CreateAccountData): Observable<string> {
@@ -35,6 +44,19 @@ class AccountApi extends Api {
     return this.axios.get('/isv-info') as any
   }
 
+  getResetToken(isv: string, username: string, sessionId: string, scene: string, sig: string, token: string): Observable<ResetToken> {
+    const params = { isv, username, type: 'reseller', sessionId, scene, sig, token }
+    return this.axios.get('/account/reset/token', { params }) as any
+  }
+
+  getResetTokenInfo(token: string): Observable<ResetTokenInfo> {
+    return this.axios.get(`/account/reset/password/${ token }`) as any
+  }
+
+  getResetValidateCode(token: string): Observable<ValidateCode> {
+    return this.axios.get(`/account/reset/mobile-code/${ token }`) as any
+  }
+
   getValidateCode(isv: string, mobile: string): Observable<ValidateCode> {
     const params = { isv, mobile }
     return this.axios.get('/account/validate-code', { params }) as any
@@ -47,6 +69,10 @@ class AccountApi extends Api {
 
   logout(token: string): Observable<void> {
     return this.axios.delete(`/account/token/${ token }`) as any
+  }
+
+  resetPassword(token: string, password: string, code: string): Observable<void> {
+    return this.axios.post<void>(`/account/reset/password/${ token }`, { password, code }) as any
   }
 
   updatePassword(accountId: string, oldPassword: string, newPassword: string): Observable<void> {
