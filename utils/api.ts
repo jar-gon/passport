@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Observable } from 'rxjs'
-import { map, shareReplay } from 'rxjs/operators'
+import { tap, map, shareReplay } from 'rxjs/operators'
 import { ApiClass as OriginApiClass, ApiCall } from '@billypon/react-utils/api'
 import { ObservablePipe } from '@billypon/rxjs-types'
 import { Dictionary } from '@billypon/ts-types'
@@ -7,14 +9,22 @@ import { Dictionary } from '@billypon/ts-types'
 import { ApiResult, PageResult } from '~/models/api'
 import { publicRuntimeConfig } from './config'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseData(observable: Observable<ApiResult>): Observable<any> {
   return observable.pipe(map(({ data }) => data && JSON.parse(JSON.stringify(data))))
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parsePageData(observable: Observable<PageResult<any>>): Observable<any[]> {
   return observable.pipe(map(({ pageData }) => pageData))
+}
+
+export function checkCode(code: string, callback: () => void): ObservablePipe<any> {
+  return (observable: Observable<any>) => {
+    return observable.pipe(tap(null, ({ retCode }) => {
+      if (retCode === code) {
+        callback()
+      }
+    }))
+  }
 }
 
 function getBaseUrl(port: number): string {
