@@ -1,5 +1,4 @@
 import router, { withRouter } from 'next/router'
-import { WithRouterProps } from 'next/dist/client/with-router'
 import { connect } from 'react-redux/es'
 import { Component } from '@billypon/react-utils/react'
 import SimpleForm, { SimpleFormRef, FormState, InputAddition, wrapItemTemplate } from '@billypon/react-utils/simple-form'
@@ -31,7 +30,7 @@ interface ResetPasswordState {
 
 @withRouter
 @connect(mapState)
-class ResetPassword extends Component<WithRouterProps & ConnectedProps, ResetPasswordState> {
+class ResetPassword extends Component<ConnectedProps, ResetPasswordState> {
   accountApi: AccountApi
   form = new SimpleFormRef()
   token: string

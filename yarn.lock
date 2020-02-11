@@ -1000,10 +1000,10 @@
   resolved "https://registry.yarnpkg.com/@billypon/react-template/-/react-template-0.1.0.tgz#a59ca56516faef1d9a86bc2d88161444a72037a5"
   integrity sha512-Bi8nDjrXP0RiUETbaSgO657TEIVZQmc86VItbzqMuLdYONBcHZJ/WR51uUJnW2/YuegpdE6nxc4uQCOnha00Jw==
 
-"@billypon/react-utils@0.1.36":
-  version "0.1.36"
-  resolved "https://registry.yarnpkg.com/@billypon/react-utils/-/react-utils-0.1.36.tgz#65918c4aa5d4d8cfcabcd47daad1c2f97817e04f"
-  integrity sha512-FDrWIaG983tXwKYuoa286YdR8mU/cCcqC/1+knXyAGgiNWGn/kMpF6x17VLq4soN/iitgc5TudR/EARNKOcoVQ==
+"@billypon/react-utils@0.1.41":
+  version "0.1.41"
+  resolved "https://registry.yarnpkg.com/@billypon/react-utils/-/react-utils-0.1.41.tgz#b8e0c739eb50997ef65303a4f09ed66f2956a3f1"
+  integrity sha512-SDpcZI5pPSA8JIo3SgkNlX/u2Ob9EvE2mjXp5SOOQGTd9m877pqhom+m6SLExENotTIRruP9KnSs83aDo7HPvA==
 
 "@billypon/rxjs-types@0.1.0":
   version "0.1.0"
