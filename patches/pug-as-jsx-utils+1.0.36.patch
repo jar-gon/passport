@@ -1,5 +1,5 @@
 diff --git a/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js b/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js
-index d28e499..af878a6 100644
+index d28e499..6d76c32 100644
 --- a/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js
 +++ b/node_modules/pug-as-jsx-utils/dist/pug-as-jsx-utils.cjs.js
 @@ -9,6 +9,16 @@ var prettier = _interopDefault(require('prettier'));
@@ -104,7 +104,7 @@ index d28e499..af878a6 100644
              attr.val = `"{${!val.replace ? val : val.replace(/"/g, '\\"')}}"`;
              attr.mustEscape = false;
            }
-@@ -437,42 +494,87 @@ const transform = function (ast) {
+@@ -437,42 +494,86 @@ const transform = function (ast) {
          break;
  
        case 'Code':
@@ -150,25 +150,24 @@ index d28e499..af878a6 100644
 +            }
 +
 +            consequent.nodes = isFragmentRequired(consequent.nodes) ? wrapInFragment(consequent.nodes) : consequent.nodes;
-+            let alternate;
-+
-+            if (!node.alternate) {
-+              alternate = [{
++            node.alternate = node.alternate || {
++              type: 'Block',
++              nodes: [{
 +                type: 'Text',
-+                val: '\'\'',
++                val: '',
 +                line,
 +                column
-+              }];
-+            } else {
-+              if (node.alternate.nodes) {
-+                node.alternate.nodes = isFragmentRequired(node.alternate.nodes) ? wrapInFragment(node.alternate.nodes) : node.alternate.nodes;
-+              }
++              }],
++              line
++            };
 +
-+              nodes.unshift(node);
-+              alternate = getNodes(node.alternate);
-+              nodes.shift();
++            if (node.alternate.nodes) {
++              node.alternate.nodes = isFragmentRequired(node.alternate.nodes) ? wrapInFragment(node.alternate.nodes) : node.alternate.nodes;
 +            }
 +
++            nodes.unshift(node);
++            const alternate = getNodes(node.alternate);
++            nodes.shift();
 +            const result = [{
                type: 'Text',
 -              val: '{',
@@ -209,7 +208,7 @@ index d28e499..af878a6 100644
          }
          break;
  
-@@ -486,14 +588,9 @@ const transform = function (ast) {
+@@ -486,14 +587,9 @@ const transform = function (ast) {
              line,
              column
            } = node;
@@ -226,7 +225,7 @@ index d28e499..af878a6 100644
              line,
              column
            }, block, {
-@@ -501,14 +598,7 @@ const transform = function (ast) {
+@@ -501,14 +597,7 @@ const transform = function (ast) {
              val: '))',
              line,
              column
@@ -242,7 +241,7 @@ index d28e499..af878a6 100644
          }
          break;
  
-@@ -521,49 +611,47 @@ const transform = function (ast) {
+@@ -521,42 +610,40 @@ const transform = function (ast) {
              line,
              column
            } = node;
@@ -260,8 +259,9 @@ index d28e499..af878a6 100644
            }, {
              type: 'Text',
 -            val: `switch (${expr}) {\n`,
--            line,
--            column
++            val: `switch (${transformGetFn(expr)}) {\n`,
+             line,
+             column
 -          }, ...block.nodes.map(node => [node.expr !== 'default' ? {
 -            type: 'Text',
 -            val: `case ${node.expr}:\n`,
@@ -275,9 +275,8 @@ index d28e499..af878a6 100644
 -          }, {
 -            type: 'Text',
 -            val: 'return (',
-+            val: `switch (${transformGetFn(expr)}) {\n`,
-             line,
-             column
+-            line,
+-            column
 -          }, node.block, {
 -            type: 'Text',
 -            val: ');\n',
@@ -311,15 +310,7 @@ index d28e499..af878a6 100644
              type: 'Text',
              val: '}\n',
              line,
-             column
-           }, {
-             type: 'Text',
--            val: 'return null;\n',
-+            val: 'return \'\';\n',
-             line,
-             column
-           }, {
-@@ -571,112 +659,91 @@ const transform = function (ast) {
+@@ -571,85 +658,90 @@ const transform = function (ast) {
              val: '})()',
              line,
              column
@@ -337,13 +328,13 @@ index d28e499..af878a6 100644
 +
 +      default:
 +        return;
-     }
++    }
 +
 +    if (replacement) {
 +      replace(isBracketsRequired(nodes) ? wrapInBrackets(replacement) : replacement);
 +      node._last = replacement[replacement.length - 1];
 +      replacement = null;
-+    }
+     }
 +
 +    nodes.unshift(node);
    }, node => {
@@ -455,26 +446,8 @@ index d28e499..af878a6 100644
 -  } : null].filter(Boolean);
 +    val: '}'
 +  }];
- }
- 
--const macro = `const __macro = {
--  for: items => ({
--    map: (mapFn) => {
--      let mapFns = [];
--      if (items && items['@@__IMMUTABLE_MAP__@@']) {
--        items.mapEntries(([key, value], i) => {
--          mapFns.push(mapFn(value, key, i));
--        });
--      } else if (items && items['@@__IMMUTABLE_LIST__@@']) {
--        items.forEach((value, i) => {
--          mapFns.push(mapFn(value, i, i));
--        });
--      } else if (Array.isArray(items)) {
--        mapFns = items.map((value, index) => mapFn(value, index, index));
--      } else {
--        mapFns = Object.keys(items || []).map((key, index) => mapFn(items[key], key, index));
--      }
--      return mapFns;
++}
++
 +function isFragmentRequired(nodes) {
 +  const [node] = nodes;
 +  return nodes.length > 1 || node && node.type === 'Text';
@@ -487,21 +460,14 @@ index d28e499..af878a6 100644
 +    block: {
 +      type: 'Block',
 +      nodes
-     },
--  }),
--};
--`;
--var template = {
--  macro
--};
++    },
 +    attrs: [],
 +    attributeBlocks: []
 +  }];
-+}
+ }
  
- const works = [// combine the contents of two className attributes.
- {
-@@ -689,7 +756,7 @@ const works = [// combine the contents of two className attributes.
+ const macro = `const __macro = {
+@@ -689,7 +781,7 @@ const works = [// combine the contents of two className attributes.
    pre: [/\{([^{}]+)\}/g, (context, whole, p1) => {
      const content = p1.replace(/^\{(.*)\}$/, '$1').replace(/\n\s+\|\s+/g, ' ').replace(/\\\n\s+/g, ' ');
      const key = hashCode(content);
@@ -510,7 +476,7 @@ index d28e499..af878a6 100644
      return `{__archived_${key}__}`;
    }],
    post: [/\{__archived_([a-z0-9]+)__\}/g, (context, whole, p1) => `{${context[p1]}}`]
-@@ -885,6 +952,18 @@ const resolveModule = (moduleName, rootDir) => {
+@@ -885,6 +977,18 @@ const resolveModule = (moduleName, rootDir) => {
    return moduleName;
  };
  
@@ -529,7 +495,7 @@ index d28e499..af878a6 100644
  const toJsx = (source, options = {}) => {
    const localWorks = works.map(({
      pre,
-@@ -970,7 +1049,9 @@ const toJsx = (source, options = {}) => {
+@@ -970,7 +1074,9 @@ const toJsx = (source, options = {}) => {
  
    let jsxCode = `\n${pug.render(pugCode, {
      pretty: true,
@@ -540,7 +506,7 @@ index d28e499..af878a6 100644
    })}\n`; // post-processing pug.render
    // post-processing is performed in the reverse order of pre-processing
  
-@@ -1027,6 +1108,11 @@ const toJsx = (source, options = {}) => {
+@@ -1027,6 +1133,11 @@ const toJsx = (source, options = {}) => {
        imports
      } = getImports(analyzed.variables, resolves);
      const variables = analyzed.variables.filter(e => used.indexOf(e) === -1);
@@ -552,7 +518,7 @@ index d28e499..af878a6 100644
      result = { ...result,
        ...analyzed,
        variables,
-@@ -1078,6 +1164,37 @@ const pugToJsx = (source, userOptions = {}) => {
+@@ -1078,6 +1189,37 @@ const pugToJsx = (source, userOptions = {}) => {
    const [_module, _import] = getPragma(options.pragma);
  
    if (options.template) {
@@ -590,15 +556,6 @@ index d28e499..af878a6 100644
      const jsxTemplate = [result.useFragment ? `import ${_import}, { Fragment } from '${_module}';` : `import ${_import} from '${_module}';`, ...(result.imports || []).map(({
        name,
        member,
-@@ -1085,7 +1202,7 @@ const pugToJsx = (source, userOptions = {}) => {
-     }) => {
-       const chunk = [name, member && member.length > 0 && `{ ${member.map(e => e.alias ? `${e.name} as ${e.alias}` : e.name).join(', ')} }`].filter(e => e).join(', ');
-       return `import ${chunk} from '${resolveModule(moduleName, rootDir)}';`;
--    }), '', result.useMacro && template.macro, `export default function (${result.variables.length > 0 ? '__params = {}' : ''}) {`, result.variables.length > 0 && `  const { ${result.variables.join(', ')} } = __params;`, '  return (', result.jsx, '  );', '}'].filter(e => e !== false).join('\n');
-+    }), result.useMacro && 'import __macro from \'pug-as-jsx-utils/src/lib/macro\';', '', `export default function (${result.variables.length > 0 ? '__params = {}' : ''}) {`, result.variables.length > 0 && `  const { ${result.variables.join(', ')} } = __params;`, '  return (', result.jsx, '  );', '}'].filter(e => e !== false).join('\n');
-     result = { ...result,
-       jsxTemplate: prettier.format(jsxTemplate, { ...jsxPrettierOptions,
-         semi: true
 diff --git a/node_modules/pug-as-jsx-utils/src/lib/macro.js b/node_modules/pug-as-jsx-utils/src/lib/macro.js
 new file mode 100644
 index 0000000..99a3bad
