@@ -58,17 +58,19 @@ class ResetPassword extends Component<ConnectedProps, ResetPasswordState> {
   initFormStates(tokenInfo: ResetTokenInfo): void {
     const states: Dictionary<FormState> = {
       username: {
-        label: '用户名',
+        label: '',
+        placeholder: '输入用户名',
         value: tokenInfo.username,
         disabled: true,
       },
       mobile: {
-        label: '手机号',
+        label: '',
+        placeholder: '输入手机号',
         value: tokenInfo.mobile,
         disabled: true,
       },
       verifyCode: {
-        label: '验证码',
+        label: '',
         placeholder: '输入验证码',
         rules: [
           { required: true, message: '请输入验证码' },
@@ -82,7 +84,7 @@ class ResetPassword extends Component<ConnectedProps, ResetPasswordState> {
         },
       },
       newPassword: {
-        label: '新密码',
+        label: '',
         subtype: 'password',
         placeholder: '请输入新密码',
         rules: [
@@ -91,7 +93,7 @@ class ResetPassword extends Component<ConnectedProps, ResetPasswordState> {
         ],
       },
       newPassword2: {
-        label: '确认密码',
+        label: '',
         subtype: 'password',
         placeholder: '确认新密码',
         rules: [

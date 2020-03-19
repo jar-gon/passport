@@ -53,7 +53,7 @@ class Register extends Component<ConnectedProps, RegisterState> {
   initFormStates(): void {
     const states: Dictionary<FormState> = {
       username: {
-        label: '用户名',
+        label: '',
         placeholder: '设置用户名',
         rules: [
           { required: true, message: '请输入用户名' },
@@ -63,7 +63,7 @@ class Register extends Component<ConnectedProps, RegisterState> {
         },
       },
       password: {
-        label: '密码',
+        label: '',
         placeholder: '输入密码',
         subtype: 'password',
         rules: [
@@ -71,7 +71,7 @@ class Register extends Component<ConnectedProps, RegisterState> {
         ],
       },
       password2: {
-        label: '确认密码',
+        label: '',
         placeholder: '再次输入密码',
         subtype: 'password',
         rules: [
@@ -80,7 +80,7 @@ class Register extends Component<ConnectedProps, RegisterState> {
         ],
       },
       mobile: {
-        label: '移动电话',
+        label: '',
         placeholder: '移动电话 +86',
         rules: [
           { required: true, message: '请输入移动电话' },
@@ -88,7 +88,7 @@ class Register extends Component<ConnectedProps, RegisterState> {
         ],
       },
       verifyCode: {
-        label: '验证码',
+        label: '',
         placeholder: '输入验证码',
         rules: [
           { required: true, message: '请输入验证码' },

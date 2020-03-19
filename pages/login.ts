@@ -38,13 +38,15 @@ class Login extends Component<ConnectedProps, LoginState> {
     }
     const states: Dictionary<FormState> = {
       username: {
-        label: '用户名',
+        label: '',
+        placeholder: '用户名',
         rules: [
           { required: true, message: '请输入用户名' },
         ],
       },
       password: {
-        label: '密码',
+        label: '',
+        placeholder: '密码',
         subtype: 'password',
         rules: [
           { required: true, message: '请输入密码' },

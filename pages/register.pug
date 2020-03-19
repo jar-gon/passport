@@ -1,15 +1,16 @@
-SiteLayout(footer=false)
-  .account.login
-    if state.states
-      .account-wrapper
-        .account-wrapper-slogan 欢迎注册 #{ props.isvInfo.name }
-        SimpleForm(_ref=form states=state.states onSubmit=onSubmit layout="vertical")
-        if state.errorMessage
-          .account--error= state.errorMessage
-        Button(type="primary" size="large" onClick=form.submit loading=form.isLoading() disabled=form.isLoading()) 立即注册
-        .account--links 已有帐号，
-          Link(href=`/login${ state.redirectQuery }`): a 请点击登入
-          | 。
+.account
+  SiteLayout(footer=false)
+    .login
+      if state.states
+        .account-wrapper
+          .account-wrapper-slogan 欢迎注册 #{ props.isvInfo.name }
+          SimpleForm(_ref=form states=state.states onSubmit=onSubmit layout="vertical")
+          if state.errorMessage
+            .account--error= state.errorMessage
+          Button(type="primary" size="large" onClick=form.submit loading=form.isLoading() disabled=form.isLoading()) 立即注册
+          .account--links 已有帐号，
+            Link(href=`/login${ state.redirectQuery }`): a 请点击登入
+            | 。
 
 Template(ref=this.usernameTpl)
   FragmentWrap

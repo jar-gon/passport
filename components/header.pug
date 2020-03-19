@@ -1,13 +1,13 @@
 .header
-  a(href=props.isvInfo.home)
-    img.logo(src=props.isvInfo.logo)
-
-  Menu(mode="horizontal")
+  Menu.float-right(mode="horizontal" theme="dark" selectable=false)
     Menu-Item
       a(href=props.isvInfo.home) 首页
     Menu-Item
       Link(href=`/login${ state.redirectQuery }`): a 登录
     Menu-Item
       Link(href=`/register${ state.redirectQuery }`): a 免费注册
+
+  a(href=props.isvInfo.home)
+    img.logo(src=props.isvInfo.logo)
 
   = props.children

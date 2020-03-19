@@ -35,7 +35,8 @@ class ForgetPassword extends Component<ConnectedProps, ForgetPasswordState> {
     }
     const states: Dictionary<FormState> = {
       username: {
-        label: '用户名',
+        label: '',
+        placeholder: '用户名',
         rules: [
           { required: true, message: '请输入用户名' },
         ],

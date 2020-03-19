@@ -35,11 +35,12 @@ class UpdatePassword extends Component<ConnectedProps, UpdatePasswordState> {
     }
     const states: Dictionary<FormState> = {
       username: {
-        label: '用户名',
-        type: 'text',
+        label: '',
+        placeholder: '用户名',
+        disabled: true,
       },
       password: {
-        label: '旧密码',
+        label: '',
         subtype: 'password',
         placeholder: '请输入旧密码',
         rules: [
@@ -47,7 +48,7 @@ class UpdatePassword extends Component<ConnectedProps, UpdatePasswordState> {
         ],
       },
       newPassword: {
-        label: '新密码',
+        label: '',
         subtype: 'password',
         placeholder: '请输入新密码',
         rules: [
@@ -56,7 +57,7 @@ class UpdatePassword extends Component<ConnectedProps, UpdatePasswordState> {
         ],
       },
       newPassword2: {
-        label: '确认密码',
+        label: '',
         subtype: 'password',
         placeholder: '确认新密码',
         rules: [

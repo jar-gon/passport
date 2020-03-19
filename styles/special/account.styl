@@ -1,8 +1,6 @@
 .account
-  position absolute
-  width 100%
   min-height 100%
-  background url('../assets/account-bg.jpg') left -($layout-header-height) no-repeat $component-background
+  half-background('../assets/account-bg.jpg', $black)
 
   &-wrapper
     base-width 370px
@@ -11,22 +9,36 @@
     &-slogan
       padding 50px 20px 30px 0
       font-size $font-size-lg
-      color $title-color
+      color $white
       text-align center
 
     .ant-form
 
       &-item
+        padding-bottom 0
+
         &-label
           padding-bottom 4px
           line-height 22px
 
+    .has-error
+      .ant-input
+        background rgba($white, .1)
+
+        &:hover
+          background rgba($white, .1)
+
     .ant-input
+      color $white
+      border-color rgba($white, .1)
+      background rgba($white, .1)
+
       &-suffix
         right 0
         width 82px
         font-size $font-size-sm
         text-align center
+        color $white
         cursor pointer
 
         div
@@ -42,7 +54,7 @@
           background $border-normal-color
 
         &-disabled
-          color $black-25
+          color rgba($white, .6)
           cursor not-allowed
 
       &-affix-wrapper
@@ -62,6 +74,7 @@
   &--links
     margin-top 20px
     font-size $font-size-sm
+    color $white
 
     a + a
       padding-left 12px
