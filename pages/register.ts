@@ -16,6 +16,7 @@ import { getRedirectQuery, combineFunctions } from '~/utils/common'
 import AccountApi, { CreateAccountData } from '~/apis/account'
 import { ApiResult } from '~/models/api'
 
+import Document from '~/components/document'
 import SiteLayout from '~/components/layout'
 import template from './register.pug'
 
@@ -166,7 +167,7 @@ class Register extends Component<ConnectedProps, RegisterState> {
   }
 
   render() {
-    return template.call(this, { ...this, SiteLayout, SimpleForm, Template, FragmentWrap, combineFunctions })
+    return template.call(this, { ...this, Document, SiteLayout, SimpleForm, Template, FragmentWrap, combineFunctions })
   }
 }
 

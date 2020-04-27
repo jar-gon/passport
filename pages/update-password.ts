@@ -15,6 +15,7 @@ import AccountApi from '~/apis/account'
 import { ApiResult } from '~/models/api'
 import { Account } from '~/models/account'
 
+import Document from '~/components/document'
 import SiteLayout from '~/components/layout'
 import template from './update-password.pug'
 
@@ -102,7 +103,7 @@ class UpdatePassword extends Component<ConnectedProps, UpdatePasswordState> {
   }
 
   render() {
-    return template.call(this, { ...this, SiteLayout, SimpleForm })
+    return template.call(this, { ...this, Document, SiteLayout, SimpleForm })
   }
 }
 

@@ -18,6 +18,7 @@ import AccountApi, { ResetTokenInfo } from '~/apis/account'
 import { ApiResult } from '~/models/api'
 import { Account } from '~/models/account'
 
+import Document from '~/components/document'
 import SiteLayout from '~/components/layout'
 import template from './reset-password.pug'
 
@@ -139,7 +140,7 @@ class ResetPassword extends Component<ConnectedProps, ResetPasswordState> {
   }
 
   render() {
-    return template.call(this, { ...this, SiteLayout, SimpleForm, FragmentWrap })
+    return template.call(this, { ...this, Document, SiteLayout, SimpleForm, FragmentWrap })
   }
 }
 

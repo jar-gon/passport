@@ -13,6 +13,7 @@ import { getRedirectQuery } from '~/utils/common'
 import AccountApi from '~/apis/account'
 import { ApiResult } from '~/models/api'
 
+import Document from '~/components/document'
 import SiteLayout from '~/components/layout'
 import template from './forget-password.pug'
 
@@ -75,7 +76,7 @@ class ForgetPassword extends Component<ConnectedProps, ForgetPasswordState> {
   }
 
   render() {
-    return template.call(this, { ...this, SiteLayout, SimpleForm })
+    return template.call(this, { ...this, Document, SiteLayout, SimpleForm })
   }
 }
 

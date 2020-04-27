@@ -16,6 +16,7 @@ import { getRedirectQuery } from '~/utils/common'
 import AccountApi from '~/apis/account'
 import { ApiResult } from '~/models/api'
 
+import Document from '~/components/document'
 import SiteLayout from '~/components/layout'
 import template from './login.pug'
 
@@ -131,7 +132,7 @@ class Login extends Component<ConnectedProps, LoginState> {
   }
 
   render() {
-    return template.call(this, { ...this, SiteLayout, SimpleForm })
+    return template.call(this, { ...this, Document, SiteLayout, SimpleForm })
   }
 }
 
